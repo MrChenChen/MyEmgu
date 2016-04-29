@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SettingConfig>
+  
+  
+  <marktolerance>
+    <marktoleranceheader>印记宽容度</marktoleranceheader>
+    
+    <textCharsensitivity>Sensitivity(char)</textCharsensitivity>
+    <textLogosensitivity>Sensitivity(LOGO)</textLogosensitivity>
+    <textExtrapixels>多余像素</textExtrapixels>
+    <textChartiltangle>字符倾斜角度</textChartiltangle>
+    <textChardefectsensitivity>字符缺陷灵敏度</textChardefectsensitivity>
+    <textLogodefectsensitivity>LOGO缺陷灵敏度</textLogodefectsensitivity>
+    <textChardefectsize>字符缺陷尺寸</textChardefectsize>
+    <textLogodefectsize>LOGO缺陷尺寸</textLogodefectsize>
+  </marktolerance>
+
+  <warningsetting>
+    <warningsettingheader>警告设置</warningsettingheader>
+    
+    
+  </warningsetting>
+
+  
+  <aboutchar>
+    <aboutcharheader>字符相关</aboutcharheader>
+    
+    
+  </aboutchar>
+
+
+  <abouttakeimage>
+    <abouttakeimageheader>取像相关</abouttakeimageheader>
+    
+  </abouttakeimage>
+
+  <iosetting>
+    <iosettingheader>IO Setting</iosettingheader>
+  </iosetting>
+  
+  
+</SettingConfig>

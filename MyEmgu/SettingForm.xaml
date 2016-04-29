@@ -1,0 +1,376 @@
+﻿<Window x:Class="MyEmgu.SettingForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:MyEmgu"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Name="MainForm"
+        Title="SettingForm"
+        Width="649.899"
+        Height="425.71"
+        AllowsTransparency="True"
+        Background="Transparent"
+        KeyUp="Window_KeyUp"
+        Loaded="Window_Loaded"
+        MouseLeftButtonDown="Grid_MouseLeftButtonDown"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        SnapsToDevicePixels="True"
+        Topmost="True"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        mc:Ignorable="d">
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation AccelerationRatio="0.7"
+                                     Duration="0:0:0.3"
+                                     From="0"
+                                     Storyboard.TargetName="MainForm"
+                                     Storyboard.TargetProperty="Opacity"
+                                     To="1" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Window.Unloaded">
+            <BeginStoryboard>
+                <Storyboard Name="FormUnload_Storyboard">
+                    <DoubleAnimation AccelerationRatio="0.3"
+                                     Duration="0:0:0.3"
+                                     From="1"
+                                     Storyboard.TargetName="MainForm"
+                                     Storyboard.TargetProperty="Opacity"
+                                     To="0" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
+            <Setter Property="BorderBrush" Value="LightGray" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="1" />
+            <Setter Property="AllowDrop" Value="true" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="Bd"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="true">
+                            <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource MainColor}" />
+                                <Setter TargetName="Bd" Property="BorderThickness" Value="1" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid>
+                            <AdornedElementPlaceholder />
+                            <Border BorderBrush="{DynamicResource textboxErrorForeColor}" BorderThickness="1" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+
+    <Grid Name="MainGrid" Margin="10">
+        <Grid.Effect>
+            <DropShadowEffect BlurRadius="15"
+                              Opacity="1"
+                              ShadowDepth="0" />
+        </Grid.Effect>
+        <Grid Background="{DynamicResource MainColor}">
+
+
+            <Grid Margin="10"
+                  Background="Transparent"
+                  MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+
+
+                <TabControl x:Name="tabControl" Style="{DynamicResource SimpleTabControl}">
+                    <TabItem Name="tabitemMarktolerance" Header="印记宽容度">
+                        <Grid>
+                            <GroupBox Width="259.332"
+                                      Height="216.987"
+                                      Margin="17.333,30.497,0,0"
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Top"
+                                      Header="基本参数">
+                                <Grid>
+                                    <TextBlock Name="textCharsensitivity"
+                                               Height="15.837"
+                                               Margin="7.012,31.496,0,0"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Top"
+                                               Text="Sensitivity(char)"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Name="textLogosensitivity"
+                                               Height="15.837"
+                                               Margin="7.012,69.597,0,0"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Top"
+                                               Text="Sensitivity(LOGO)"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Name="textExtrapixels"
+                                               Height="15.837"
+                                               Margin="7.012,105.971,0,0"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Top"
+                                               Text="多余像素"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Name="textChartiltangle"
+                                               Margin="7.012,142.62,0,0"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Top"
+                                               Text="字符倾斜角度"
+                                               TextWrapping="Wrap" />
+                                    <GroupBox Width="102.666"
+                                              Height="173.642"
+                                              Margin="128.541,6.94,0,0"
+                                              HorizontalAlignment="Left"
+                                              VerticalAlignment="Top"
+                                              Header="目前包装">
+                                        <Grid>
+                                            <TextBox Name="textboxCharsensitivity"
+                                                     Width="72.666"
+                                                     Height="23"
+                                                     Margin="8.654,7.83,0,0"
+                                                     HorizontalAlignment="Left"
+                                                     VerticalAlignment="Top">
+                                                <TextBox.Text>
+                                                    <Binding Path="Charsensitivity" UpdateSourceTrigger="PropertyChanged">
+                                                        <Binding.ValidationRules>
+                                                            <local:MaxMinValueRule Max="10" Min="0" />
+                                                        </Binding.ValidationRules>
+                                                    </Binding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                            <TextBox Name="textboxLogosensitivity"
+                                                     Width="72.666"
+                                                     Height="23"
+                                                     Margin="8.654,45.163,0,0"
+                                                     HorizontalAlignment="Left"
+                                                     VerticalAlignment="Top">
+                                                <TextBox.Text>
+                                                    <Binding Path="Logosensitivity" UpdateSourceTrigger="PropertyChanged">
+                                                        <Binding.ValidationRules>
+                                                            <local:MaxMinValueRule Max="10" Min="0" />
+                                                        </Binding.ValidationRules>
+                                                    </Binding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                            <TextBox Name="textboxExtrapixels"
+                                                     Width="72.666"
+                                                     Height="23"
+                                                     Margin="8.654,82.299,0,0"
+                                                     HorizontalAlignment="Left"
+                                                     VerticalAlignment="Top">
+                                                <TextBox.Text>
+                                                    <Binding Path="Extrapixels" UpdateSourceTrigger="PropertyChanged">
+                                                        <Binding.ValidationRules>
+                                                            <local:MaxMinValueRule Max="10" Min="0" />
+                                                        </Binding.ValidationRules>
+                                                    </Binding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                            <TextBox Name="textboxChartiltangle"
+                                                     Width="72.666"
+                                                     Height="23"
+                                                     Margin="8.654,118.965,0,0"
+                                                     HorizontalAlignment="Left"
+                                                     VerticalAlignment="Top">
+                                                <TextBox.Text>
+                                                    <Binding Path="Chartiltangle" UpdateSourceTrigger="PropertyChanged">
+                                                        <Binding.ValidationRules>
+                                                            <local:MaxMinValueRule Max="10" Min="0" />
+                                                        </Binding.ValidationRules>
+                                                    </Binding>
+                                                </TextBox.Text>
+                                            </TextBox>
+
+                                        </Grid>
+                                    </GroupBox>
+
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox Width="261.966"
+                                      Height="216.654"
+                                      Margin="324.933,30.83,0,0"
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Top"
+                                      Header="缺陷尺寸">
+                                <Grid>
+                                    <TextBlock Name="textChardefectsensitivity"
+                                               Height="15.837"
+                                               Margin="7.012,31.496,0,0"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Top"
+                                               Text="字符缺陷灵敏度"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Name="textLogodefectsensitivity"
+                                               Height="15.837"
+                                               Margin="7.012,69.597,0,0"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Top"
+                                               Text="LOGO缺陷灵敏度"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Name="textChardefectsize"
+                                               Height="15.837"
+                                               Margin="7.012,105.971,0,0"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Top"
+                                               Text="字符缺陷尺寸"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Name="textLogodefectsize"
+                                               Margin="7.012,142.62,0,0"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Top"
+                                               Text="LOGO缺陷尺寸"
+                                               TextWrapping="Wrap" />
+
+                                    <TextBox Name="textboxChardefectsensitivity"
+                                             Width="72.666"
+                                             Height="23"
+                                             Margin="148.282,28.485,0,0"
+                                             HorizontalAlignment="Left"
+                                             VerticalAlignment="Top">
+                                        <TextBox.Text>
+                                            <Binding Path="Chardefectsensitivity" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <local:MaxMinValueRule Max="10" Min="0" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <TextBox Name="textboxLogodefectsensitivity"
+                                             Width="72.666"
+                                             Height="23"
+                                             Margin="146.948,65.818,0,0"
+                                             HorizontalAlignment="Left"
+                                             VerticalAlignment="Top">
+                                        <TextBox.Text>
+                                            <Binding Path="Logodefectsensitivity" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <local:MaxMinValueRule Max="10" Min="0" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <TextBox Name="textboxChardefectsize"
+                                             Width="72.666"
+                                             Height="23"
+                                             Margin="146.948,102.954,0,0"
+                                             HorizontalAlignment="Left"
+                                             VerticalAlignment="Top">
+                                        <TextBox.Text>
+                                            <Binding Path="Chardefectsize" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <local:MaxMinValueRule Max="20" Min="5" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <TextBox Name="textboxLogodefectsize"
+                                             Width="72.666"
+                                             Height="23"
+                                             Margin="146.948,139.62,0,0"
+                                             HorizontalAlignment="Left"
+                                             VerticalAlignment="Top">
+                                        <TextBox.Text>
+                                            <Binding Path="Logodefectsize" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <local:MaxMinValueRule Max="20" Min="5" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+
+                                </Grid>
+                            </GroupBox>
+
+
+                        </Grid>
+                    </TabItem>
+
+
+
+
+                    <TabItem Name="tabitemWaringsetting" Header="警告设置">
+                        <Grid />
+                    </TabItem>
+                    <TabItem Name="tabitemAboutchar" Header="字符相关">
+                        <Grid />
+                    </TabItem>
+                    <TabItem Name="tabitemAbouttakeimage" Header="取像相关">
+                        <Grid />
+                    </TabItem>
+                    <TabItem Name="tabitemIOsetting" Header="IO Setting">
+                        <Grid />
+                    </TabItem>
+
+                </TabControl>
+
+                <Button x:Name="buttonOK"
+                        Width="79"
+                        Height="27"
+                        Margin="308.652,343.649,222.247,15.061"
+                        Click="buttonOK_Click"
+                        Content="确定"
+                        Cursor="Hand" />
+                <Button x:Name="buttonCancle"
+                        Width="79"
+                        Height="27"
+                        Margin="411.652,343.649,119.247,15.061"
+                        Click="buttonCancle_Click"
+                        Content="取消"
+                        Cursor="Hand" />
+                <Button x:Name="buttonHelp"
+                        Width="79"
+                        Height="27"
+                        Margin="512.152,343.649,18.747,15.061"
+                        Content="帮助"
+                        Cursor="Hand" />
+
+                <Border Width="15"
+                        Height="15"
+                        Margin="0,0,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Background="Transparent"
+                        Cursor="Hand"
+                        MouseDown="buttonCancle_Click">
+                    <Path Stroke="White" StrokeThickness="2">
+                        <Path.Data>
+                            <GeometryGroup>
+                                <LineGeometry StartPoint="0,0" EndPoint="15,15" />
+                                <LineGeometry StartPoint="15,0" EndPoint="0,15" />
+                            </GeometryGroup>
+                        </Path.Data>
+                    </Path>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

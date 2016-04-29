@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MainFormConfig>
+  <mainform>
+    <camera>照相</camera>
+    <camerasetting>相机设定</camerasetting>
+    <teach>教授</teach>
+    <start>检测</start>
+    <stop>停止</stop>
+    <test>测试</test>
+    <setting>配置</setting>
+    <testinfo>检测信息</testinfo>
+    <refresh>重置计数</refresh>
+    <exit>EXIT</exit>
+
+
+    <modulename>模块名称</modulename>
+    <looptime>循环时间</looptime>
+    <speed>速度(pph)</speed>
+    <good>良品</good>
+    <bad>不良</bad>
+    <percent>良率</percent>
+    
+  </mainform>
+
+
+
+  <menu >
+    <file>
+      <fileheader>文件</fileheader>
+      <loadsettingfile >装载配置文件</loadsettingfile>
+      <savesettingfile>保存配置文件</savesettingfile>
+      <loadpackagefile>装载包装文件</loadpackagefile>
+      <setpackagefile>设定包装文件</setpackagefile>
+      <loadpicture>装载图像</loadpicture>
+      <savepicture>保存图像</savepicture>
+      <exit>退出</exit>
+    </file>
+    <config >
+      <configheader>配置</configheader>
+
+    </config>
+    <security>
+      <securityheader>安全</securityheader>
+
+
+
+    </security>
+
+
+    <tools>
+      <toolsheader>工具</toolsheader>
+
+
+    </tools>
+
+
+    <report>
+      <reportheader>报告</reportheader>
+
+
+    </report>
+
+
+    <help>
+      <helpheader>帮助</helpheader>
+
+    </help>
+  </menu>
+
+
+
+</MainFormConfig>
