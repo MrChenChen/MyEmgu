@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 using System.Windows.Media;
 
 namespace MyEmgu
@@ -12,20 +8,22 @@ namespace MyEmgu
     /// </summary>
     public class Detail : INotifyPropertyChanged
     {
-        string _DetailName;
+        private SolidColorBrush _ContentBrush = new SolidColorBrush(Colors.Black);
+        private string _DetailContent;
+        private string _DetailData;
+        private string _DetailName;
 
-        public string DetailName
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public SolidColorBrush ContentBrush
         {
-            get { return _DetailName; }
+            get { return _ContentBrush; }
             set
             {
-                _DetailName = value;
-                OnPropertyChanged("DetailName");
+                _ContentBrush = value;
+                OnPropertyChanged("ContentBrush");
             }
         }
-
-
-        string _DetailContent;
 
         public string DetailContent
         {
@@ -36,10 +34,6 @@ namespace MyEmgu
                 OnPropertyChanged("DetailContent");
             }
         }
-
-
-
-        string _DetailData;
 
         public string DetailData
         {
@@ -54,24 +48,17 @@ namespace MyEmgu
             }
         }
 
-
-
-        SolidColorBrush _ContentBrush = new SolidColorBrush(Colors.Black);
-        public SolidColorBrush ContentBrush
+        public string DetailName
         {
-            get { return _ContentBrush; }
+            get { return _DetailName; }
             set
             {
-                _ContentBrush = value;
-                OnPropertyChanged("ContentBrush");
+                _DetailName = value;
+                OnPropertyChanged("DetailName");
             }
         }
 
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        virtual internal protected void OnPropertyChanged(string propertyName)
+        protected internal virtual void OnPropertyChanged(string propertyName)
         {
             if (this.PropertyChanged != null)
             {
@@ -79,9 +66,4 @@ namespace MyEmgu
             }
         }
     }
-
-
-
-
-
 }

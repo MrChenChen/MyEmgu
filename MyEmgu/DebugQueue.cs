@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MyEmgu
+﻿namespace MyEmgu
 {
     /// <summary>
     /// 显示Debug信息
     /// </summary>
     public class DebugQueue
     {
-
         private int m_Count;
+        private string m_Debug;
+
+        public DebugQueue()
+        {
+            Count = 0;
+        }
+
         public int Count
         {
             get
@@ -24,13 +25,6 @@ namespace MyEmgu
             }
         }
 
-        public DebugQueue()
-        {
-            Count = 0;
-        }
-
-
-        private string m_Debug;
         public string Debug
         {
             get
@@ -42,6 +36,5 @@ namespace MyEmgu
                 m_Debug = value;
             }
         }
-
     }
 }

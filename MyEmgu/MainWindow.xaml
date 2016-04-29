@@ -6,47 +6,54 @@
         Width="1024"
         Height="768"
         Loaded="Window_Loaded"
-        ResizeMode="NoResize"
+        ResizeMode="CanResizeWithGrip"
         SnapsToDevicePixels="True"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None">
-    <Window.Resources>
+        WindowStyle="None"
+        Icon="Icon\github.ico"
+        AllowsTransparency="True"
+        >
 
 
-        <Style x:Key="SeparatorStyle1" TargetType="{x:Type Separator}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Separator}">
-                        <Grid Margin="0,1,0,1" SnapsToDevicePixels="true">
-                            <Rectangle Height="1"
-                                       Margin="0,0,1,1"
-                                       Fill="#E0E0E0" />
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+    <Window.Template>
+        <ControlTemplate TargetType="{x:Type Window}">
+            <Border Margin="10" Background="Transparent" >
+                <Border.Effect>
+                    <DropShadowEffect x:Name="MainBorderEffect"
+                                          BlurRadius="10"
+                                          Opacity="1"
+                                          ShadowDepth="0"
+                                          />
+                </Border.Effect>
+                <Border Margin="5">
+                    <ContentPresenter Grid.Row="1" Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
+                </Border>
+            </Border>
+        </ControlTemplate>
+    </Window.Template>
 
 
-    </Window.Resources>
-    <Grid>
+    <Grid Background="White">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="120" />
             <RowDefinition Height="631*" />
         </Grid.RowDefinitions>
 
+
+        <!-- 上方7个按钮 -->
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
                 <RowDefinition Height="80*" />
             </Grid.RowDefinitions>
-            <Border Background="{DynamicResource MainColor}">
+            <Border Name="TitleBar" Background="{DynamicResource MainColor}" MouseLeftButtonDown="Title_MouseLeftDown">
                 <Menu x:Name="menu"
                       Margin="0,0"
                       VerticalAlignment="Top"
                       Background="{DynamicResource MainColor}"
                       TextBlock.FontSize="15"
-                      TextBlock.FontWeight="Normal">
+                      TextBlock.FontWeight="Normal" HorizontalAlignment="Left" Width="426">
 
                     <MenuItem Name="menuFile"
                               Header="文件"
@@ -79,7 +86,9 @@
                               Background="{DynamicResource MainColor}"
                               Header="工具"
                               TextBlock.FontWeight="Bold">
-                        <MenuItem Click="menuShowDebugInfo_Click" Header="显示调试信息" />
+                        <MenuItem Click="menuShowDebugInfo_Click"
+                                  Header="显示调试信息"
+                                  IsChecked="True" />
                     </MenuItem>
 
                     <MenuItem Name="menuReport"
@@ -97,17 +106,114 @@
                 </Menu>
             </Border>
 
-            <Border Width="34"
-                    Height="26"
+            <!--#region  3 个右上角按钮-->
+
+            <Border Name="MinBorder"
+
+                    Width="34"
+                    Height="30"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Background="Transparent"
+                    MouseUp="Min_MouseUp" Margin="0,0,68,0">
+                <Grid>
+                    <Border Name="MinBackBorder"
+                            Background="White"
+                            Opacity="0" />
+                    <Grid Margin="12,10,12,10">
+                        <Path Name="MinLines"
+                              Stroke="White"
+                              StrokeThickness="2">
+                            <Path.Data>
+                                <LineGeometry StartPoint="0,10" EndPoint="10,10" />
+                            </Path.Data>
+                        </Path>
+                    </Grid>
+                </Grid>
+                <Border.Triggers>
+                    <EventTrigger RoutedEvent="Border.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.2"
+                                                 Storyboard.TargetName="MinBackBorder"
+                                                 Storyboard.TargetProperty="Opacity"
+                                                 To="0.4" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="Border.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.2"
+                                                 Storyboard.TargetName="MinBackBorder"
+                                                 Storyboard.TargetProperty="Opacity"
+                                                 To="0" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Border.Triggers>
+            </Border>
+
+            <Border Name="MaxBorder"
+                    Width="34"
+                    Height="30"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Background="Transparent"
+                    MouseUp="Max_MouseUp" Margin="0,0,34,0">
+                <Grid>
+                    <Border Name="MaxBackBorder"
+                            Background="White"
+                            Opacity="0" />
+                    <Grid Margin="12,10,12,10">
+                        <Path Name="MaxLines"
+                              Stroke="White"
+                              StrokeThickness="2">
+                            <Path.Data>
+                                <GeometryGroup>
+
+                                    <RectangleGeometry Rect="0,0,10,10" />
+                                </GeometryGroup>
+                            </Path.Data>
+                        </Path>
+                    </Grid>
+                </Grid>
+                <Border.Triggers>
+                    <EventTrigger RoutedEvent="Border.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.2"
+                                                 Storyboard.TargetName="MaxBackBorder"
+                                                 Storyboard.TargetProperty="Opacity"
+                                                 To="0.4" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="Border.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.2"
+                                                 Storyboard.TargetName="MaxBackBorder"
+                                                 Storyboard.TargetProperty="Opacity"
+                                                 To="0" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Border.Triggers>
+            </Border>
+
+            <Border Name="ExitBorder"
+                    Width="34"
+                    Height="30"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
                     Background="Transparent"
                     MouseUp="Exit_MouseUp">
                 <Grid>
-                    <Border Name="BackBorder"
-                            Background="White"
+                    <Border Name="CloseBackBorder"
+                            Background="Red"
                             Opacity="0" />
-                    <Grid Margin="12,8,12,8">
+                    <Grid Margin="12,10,12,10">
                         <Path Name="CloseLines"
                               Stroke="White"
                               StrokeThickness="1">
@@ -124,33 +230,27 @@
                     <EventTrigger RoutedEvent="Border.MouseEnter">
                         <BeginStoryboard>
                             <Storyboard>
-                                <DoubleAnimation Duration="0:0:0"
-                                                 Storyboard.TargetName="BackBorder"
+                                <DoubleAnimation Duration="0:0:0.2"
+                                                 Storyboard.TargetName="CloseBackBorder"
                                                  Storyboard.TargetProperty="Opacity"
-                                                 To="0.4" />
-                                <DoubleAnimation Duration="0:0:0"
-                                                 Storyboard.TargetName="CloseLines"
-                                                 Storyboard.TargetProperty="StrokeThickness"
-                                                 To="2" />
+                                                 To="0.7" />
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
                     <EventTrigger RoutedEvent="Border.MouseLeave">
                         <BeginStoryboard>
                             <Storyboard>
-                                <DoubleAnimation Duration="0:0:0"
-                                                 Storyboard.TargetName="BackBorder"
+                                <DoubleAnimation Duration="0:0:0.2"
+                                                 Storyboard.TargetName="CloseBackBorder"
                                                  Storyboard.TargetProperty="Opacity"
                                                  To="0" />
-                                <DoubleAnimation Duration="0:0:0"
-                                                 Storyboard.TargetName="CloseLines"
-                                                 Storyboard.TargetProperty="StrokeThickness"
-                                                 To="1" />
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
                 </Border.Triggers>
             </Border>
+
+            <!--#endregion-->
 
             <Border Grid.Row="1" Background="{DynamicResource MainColor}">
 
@@ -212,11 +312,9 @@
                                     <Trigger Property="IsEnabled" Value="false">
                                         <Setter Property="Opacity" Value="0.4" />
                                     </Trigger>
-
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Button.Template>
-
                     </Button>
                     <Button Name="buttonCameraSetting"
                             Grid.Column="1"
@@ -231,7 +329,6 @@
 
                                     <Border Margin="8,2,8,22">
                                         <Image Margin="4" Source="Icon/camerasetting.png" />
-
                                     </Border>
                                     <TextBlock Margin="5,5,5,8"
                                                HorizontalAlignment="Center"
@@ -266,7 +363,6 @@
                                     <Trigger Property="IsEnabled" Value="false">
                                         <Setter Property="Opacity" Value="0.4" />
                                     </Trigger>
-
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Button.Template>
@@ -284,7 +380,6 @@
 
                                     <Border Margin="8,2,8,22">
                                         <Image Margin="4" Source="Icon/teach.png" />
-
                                     </Border>
                                     <TextBlock Margin="5,5,5,8"
                                                HorizontalAlignment="Center"
@@ -319,7 +414,6 @@
                                     <Trigger Property="IsEnabled" Value="false">
                                         <Setter Property="Opacity" Value="0.4" />
                                     </Trigger>
-
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Button.Template>
@@ -371,7 +465,6 @@
                                     <Trigger Property="IsEnabled" Value="false">
                                         <Setter Property="Opacity" Value="0.4" />
                                     </Trigger>
-
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Button.Template>
@@ -424,7 +517,6 @@
                                     <Trigger Property="IsEnabled" Value="false">
                                         <Setter Property="Opacity" Value="0.4" />
                                     </Trigger>
-
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Button.Template>
@@ -475,7 +567,6 @@
                                     <Trigger Property="IsEnabled" Value="false">
                                         <Setter Property="Opacity" Value="0.4" />
                                     </Trigger>
-
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Button.Template>
@@ -530,16 +621,12 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-
                 </Grid>
                 <!--#endregion-->
-
             </Border>
-
-
         </Grid>
 
-
+        <!--主窗体布局-->
         <Grid Grid.Row="1" Grid.RowSpan="2">
 
             <Grid.RowDefinitions>
@@ -547,8 +634,8 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="120" />
                 <RowDefinition Height="30" />
-
             </Grid.RowDefinitions>
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="180*"
                                   MinWidth="230"
@@ -558,15 +645,7 @@
 
 
 
-            <Line Grid.RowSpan="3"
-                  Width="1"
-                  HorizontalAlignment="Right"
-                  Stroke="{DynamicResource MainColor}"
-                  StrokeThickness="2"
-                  X1="0"
-                  X2="0"
-                  Y1="0"
-                  Y2="2000" />
+            <!-- 系统标志 -->
             <Border Name="StatusBorder"
                     Width="{Binding ElementName=groupBoxInfo,
                                     Path=ActualWidth,
@@ -591,7 +670,6 @@
                 </TextBlock>
             </Border>
 
-
             <GridSplitter Grid.RowSpan="5"
                           Width="3"
                           HorizontalAlignment="Right"
@@ -606,6 +684,7 @@
                   Grid.Column="1"
                   Background="Transparent">
                 <Grid.RowDefinitions>
+                    <!--    -->
                     <RowDefinition Height="145*" />
                     <RowDefinition Height="150" />
                 </Grid.RowDefinitions>
@@ -617,25 +696,26 @@
                     </ContextMenu>
                 </Grid.ContextMenu>
 
-                <Image Width="578.179"
-                       Height="477.982"
+                <Image Grid.Row="0"
                        HorizontalAlignment="Left"
-                       VerticalAlignment="Top" />
+                       VerticalAlignment="Top"
+                       />
+
+
+
+
 
             </Grid>
+
             <!--  调试信息面板  -->
-            <Grid Grid.Row="0"
-                  Grid.RowSpan="3"
+            <Grid Grid.Row="2"
                   Grid.Column="1"
-                  Height="200"
-                  VerticalAlignment="Bottom"
-                  Visibility="{Binding ElementName=borderDebug,
-                                       Path=Visibility}">
+                  >
                 <Border Name="borderDebug"
-                        Margin="1,1,3,1"
+                        Margin="-1,1,1,-1"
+                        Background="#FF74A9CD"
                         BorderBrush="{DynamicResource MainColor}"
-                        BorderThickness="1"
-                        Visibility="Collapsed">
+                        BorderThickness="1">
                     <Border.Resources>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="SnapsToDevicePixels" Value="true" />
@@ -667,6 +747,7 @@
                 </Border>
             </Grid>
 
+            <!--  检测信息  -->
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30" />
@@ -701,12 +782,10 @@
                                         Margin="0,0,-2000,0"
                                         BorderBrush="LightBlue"
                                         BorderThickness="0,0,0,1" />
-
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-
             </Grid>
 
             <!--  重置计数按钮  -->
@@ -714,18 +793,20 @@
                     Width="{Binding ElementName=groupBoxInfo,
                                     Path=ActualWidth,
                                     Mode=OneWay}"
-                    Margin="10,10,10,10"
+                    Margin="10,40,10,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     BorderBrush="{DynamicResource MainColor}"
-                    BorderThickness="0">
+                    BorderThickness="0"
+                    Tag="0"
+                    >
                 <Button Name="buttonRefresh"
                         Width="120"
                         Height="80"
                         Click="buttonRefresh_Click"
                         Content="重置计数"
-                        Cursor="Hand"
-                        IsTabStop="False">
+                        IsTabStop="False"
+                        >
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
 
@@ -735,6 +816,10 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
 
+                                <Border Name="Showborder"  Opacity="0"  Grid.RowSpan="2" Margin="11.333,-10.583,10,-7.916" BorderBrush="{DynamicResource MainColor}" BorderThickness="1" />
+
+
+
                                 <Image Name="refreshimage"
                                        RenderTransformOrigin="0.5,0.5"
                                        Source="Icon/refresh.png">
@@ -742,6 +827,7 @@
                                         <RotateTransform Angle="0" />
                                     </Image.RenderTransform>
                                 </Image>
+
                                 <ContentPresenter Name="refreshtxt"
                                                   Grid.Row="1"
                                                   HorizontalAlignment="Center"
@@ -751,11 +837,13 @@
                                         <DropShadowEffect BlurRadius="5" ShadowDepth="0" />
                                     </ContentPresenter.Effect>
                                 </ContentPresenter>
-
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="Button.IsEnabled" Value="False">
                                     <Setter TargetName="ButtonGrid" Property="Opacity" Value="0.6" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Showborder" Property="Opacity" Value="1"></Setter>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -773,29 +861,33 @@
                 <TextBlock Name="textWorkpath"
                            Margin="3,0,0,0"
                            VerticalAlignment="Center"
-                           TextBlock.FontSize="10" />
+                           Cursor="Hand"
+                           TextBlock.FontSize="14"  >
+
+                </TextBlock>
             </Border>
             <Border Grid.Row="3"
                     Grid.Column="1"
                     HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
                     BorderBrush="{DynamicResource MainColor}"
                     BorderThickness="1,0,0,0">
                 <TextBlock x:Name="nowtime"
                            Grid.Row="3"
                            Grid.Column="1"
-                           Height="30"
+                           Height="27.333"
                            Margin="5,8,5,0"
                            HorizontalAlignment="Right"
                            VerticalAlignment="Center"
-                           FontSize="16"
+                           FontSize="15"
                            FontWeight="Bold"
                            TextAlignment="Center" />
             </Border>
-
-
         </Grid>
 
-
-        <!--<Button  Name="buttonExit" HorizontalAlignment="Right"  Content="EXIT" FontSize="16" FontWeight="Bold" VerticalAlignment="Bottom" Height="32.898" Width="113.887"  Click="buttonExit_Click" Grid.Row="1" Margin="0,0,30.75,74.833" Cursor="Hand" SnapsToDevicePixels="True" />-->
+        <!--<Button  Name="buttonExit" HorizontalAlignment="Right"  Content="EXIT" FontSize="16" FontWeight="Bold" VerticalAlignment="Bottom" Height="32.898" Width="113.887"  Grid.Row="1" Margin="0,0,24.75,50.833" Cursor="Hand" SnapsToDevicePixels="True" />-->
     </Grid>
+
+
+
 </Window>

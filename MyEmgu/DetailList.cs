@@ -1,15 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Media;
 
 namespace MyEmgu
 {
     public class DetailList : ObservableCollection<Detail>
     {
+        private static DetailList OnlyInstance = new DetailList();
+
+        private DetailList()
+        {
+        }
+
+        /// <summary>
+        /// 获取DetailList唯一实例
+        /// </summary>
+        /// <returns></returns>
+        public static DetailList GetOnlyInstance()
+        {
+            return OnlyInstance;
+        }
 
         /// <summary>
         /// 向DetailList中添加新项
@@ -50,27 +59,6 @@ namespace MyEmgu
                     AddItem("percent", "良率", "100%");
                     break;
             }
-
         }
-
-
-
-
-        private DetailList()
-        {
-
-        }
-
-
-        static DetailList OnlyInstance = new DetailList();
-        /// <summary>
-        /// 获取DetailList唯一实例
-        /// </summary>
-        /// <returns></returns>
-        public static DetailList GetOnlyInstance()
-        {
-            return OnlyInstance;
-        }
-
     }
 }

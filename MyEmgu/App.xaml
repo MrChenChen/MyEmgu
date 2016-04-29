@@ -1,4 +1,4 @@
-﻿<Application x:Class="Test1.App"
+﻿<Application x:Class="MyEmgu.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
@@ -11,7 +11,6 @@
         <local:ListBoxLeftWidthConverter x:Key="ListBoxLeftWidthConverter" />
         <local:ListBoxRightWidthConverter x:Key="ListBoxRightWidthConverter" />
 
-
         <SolidColorBrush x:Key="MainColor" Color="#285A8C" />
         <SolidColorBrush x:Key="TextColor" Color="White" />
 
@@ -21,10 +20,8 @@
 
         <SolidColorBrush x:Key="textboxChangedForeColor" Color="Green" />
 
-
         <!--#region Listbox 的样式-->
         <!--  ListBox *********************************************************************************************************************************************************  -->
-
 
         <!--  Simple Repeat Button - This is used by Simple ScrollBar for the up and down buttons  -->
         <Style x:Key="SimpleRepeatButtonTop"
@@ -45,7 +42,6 @@
                                       Stroke="#991F79B8"
                                       StrokeThickness="2" />
                             </Grid>
-
                         </Grid>
                         <ControlTemplate.Triggers>
 
@@ -54,9 +50,8 @@
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
                                 <Setter TargetName="DecreaseArrow" Property="Fill" Value="#FF1F79B8" />
-                                <!--<Setter Property="BorderBrush" Value="{DynamicResource PressedBorderBrush}" TargetName="Border"/>-->
+                                <!--<Setter Property="BorderBrush" Value="{DynamicResource PressedBorderBrush}" TargetName="Border" />-->
                             </Trigger>
-
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -82,7 +77,6 @@
                                       Stroke="#991F79B8"
                                       StrokeThickness="2" />
                             </Grid>
-
                         </Grid>
                         <ControlTemplate.Triggers>
 
@@ -91,9 +85,8 @@
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
                                 <Setter TargetName="IncreaseArrow" Property="Fill" Value="#FF1F79B8" />
-                                <!--<Setter Property="BorderBrush" Value="{DynamicResource PressedBorderBrush}" TargetName="Border"/>-->
+                                <!--<Setter Property="BorderBrush" Value="{DynamicResource PressedBorderBrush}" TargetName="Border" />-->
                             </Trigger>
-
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -234,7 +227,6 @@
             </Setter>
         </Style>
 
-
         <!--
             Simple ScrollViewer
             ScrollViewer is a Grid control which has a ContentPresenter and a Horizontal and Vertical ScrollBar
@@ -294,7 +286,6 @@
             </Setter>
         </Style>
 
-
         <!--  Simple ListBoxItem - This is used for each Item in a ListBox. The item's content is placed in the ContentPresenter  -->
 
         <Style TargetType="{x:Type ListBoxItem}">
@@ -315,7 +306,7 @@
 
                             <!--  Change IsSelected SelectedBackgroundBrush to set the selection color for the items  -->
                             <!--<Trigger Property="IsSelected" Value="true">
-                                <Setter Property="Background" Value="{DynamicResource SelectedBackgroundBrush}" TargetName="Border"/>
+                                <Setter Property="Background" Value="{DynamicResource SelectedBackgroundBrush}" TargetName="Border" />
                             </Trigger>-->
 
                             <Trigger Property="IsEnabled" Value="false">
@@ -326,7 +317,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
 
         <!--  Simple ListBox - This uses SimpleScrollViewer to allow items to be scrolled and SimpleListBoxItem to define the look of each item  -->
         <Style x:Key="SimpleListBox" TargetType="{x:Type ListBox}">
@@ -350,7 +340,6 @@
 
                                 <!--  The StackPanel is used to display the children by setting IsItemsHost to be Trus  -->
                                 <StackPanel Margin="2" IsItemsHost="true" />
-
                             </ScrollViewer>
                         </Grid>
                         <ControlTemplate.Triggers>
@@ -366,13 +355,9 @@
             </Setter>
         </Style>
 
-
         <!--#endregion-->
 
-
-
         <!--#region expander-->
-
 
         <Style x:Key="ExpanderHeaderFocusVisual">
             <Setter Property="Control.Template">
@@ -439,7 +424,6 @@
                                 <Setter TargetName="circle" Property="Stroke" Value="#ee1F79B8" />
                                 <Setter TargetName="circle" Property="StrokeThickness" Value="2" />
                                 <Setter TargetName="arrow" Property="Stroke" Value="#ff1F79B8" />
-
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -508,10 +492,7 @@
             </Setter>
         </Style>
 
-
         <!--#endregion-->
-
-
 
         <!--#region TabControl 的样式-->
 
@@ -538,7 +519,6 @@
                                       IsItemsHost="True"
                                       KeyboardNavigation.TabIndex="1" />
 
-
                             <Border x:Name="Border"
                                     Grid.Row="1"
                                     Background="White"
@@ -553,15 +533,12 @@
                                 <ContentPresenter x:Name="PART_SelectedContentHost"
                                                   Margin="4"
                                                   ContentSource="SelectedContent" />
-
                             </Border>
                         </Grid>
-
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-
 
         <!--  Simple TabItem  -->
         <Style TargetType="{x:Type TabItem}">
@@ -596,9 +573,6 @@
                                                   ContentSource="Header"
                                                   RecognizesAccessKey="True" />
                             </Border>
-
-
-
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="True">
@@ -614,8 +588,6 @@
         </Style>
 
         <!--#endregion-->
-
-
 
         <Style TargetType="{x:Type Button}">
             <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -637,12 +609,9 @@
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
-
                 </Setter.Value>
             </Setter>
         </Style>
-
-
 
         <!--  Simple MenuItem - The template uses triggers to provide four different arrangements of menu item which are set via the Role property  -->
         <Style TargetType="{x:Type MenuItem}">
@@ -713,7 +682,7 @@
                                                 BorderBrush="{DynamicResource TextColor}"
                                                 BorderThickness="1">
                                             <!--<Border.Effect>
-                                                <DropShadowEffect Opacity="0.5"  />
+                                                <DropShadowEffect Opacity="0.5" />
                                             </Border.Effect>-->
                                         </Border>
 
@@ -789,7 +758,6 @@
                             <Trigger Property="IsChecked" Value="true">
                                 <Setter TargetName="GlyphPanel" Property="Visibility" Value="Visible" />
                                 <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
-
                             </Trigger>
 
                             <Trigger SourceName="SubMenuPopup" Property="AllowsTransparency" Value="true">
@@ -820,8 +788,6 @@
             </Setter>
         </Style>
 
-
-
         <Style TargetType="{x:Type ContextMenu}">
             <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -838,7 +804,7 @@
                                         BorderBrush="Black"
                                         BorderThickness="1">
                                     <!--<Border.Effect>
-                                        <DropShadowEffect Opacity="0.5"  />
+                                        <DropShadowEffect Opacity="0.5" />
                                     </Border.Effect>-->
                                 </Border>
 
@@ -849,12 +815,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
-
-
         </Style>
-
-
 
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
@@ -887,7 +848,20 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
 
+        <Style x:Key="SeparatorStyle1" TargetType="{x:Type Separator}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Separator}">
+                        <Grid Margin="0,1,0,1" SnapsToDevicePixels="true">
+                            <Rectangle Height="1"
+                                       Margin="0,0,1,1"
+                                       Fill="#E0E0E0" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
 

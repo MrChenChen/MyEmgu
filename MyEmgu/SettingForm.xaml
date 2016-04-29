@@ -91,9 +91,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
     </Window.Resources>
-
 
     <Grid Name="MainGrid" Margin="10">
         <Grid.Effect>
@@ -103,11 +101,9 @@
         </Grid.Effect>
         <Grid Background="{DynamicResource MainColor}">
 
-
             <Grid Margin="10"
                   Background="Transparent"
                   MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-
 
                 <TabControl x:Name="tabControl" Style="{DynamicResource SimpleTabControl}">
                     <TabItem Name="tabitemMarktolerance" Header="印记宽容度">
@@ -209,10 +205,8 @@
                                                     </Binding>
                                                 </TextBox.Text>
                                             </TextBox>
-
                                         </Grid>
                                     </GroupBox>
-
                                 </Grid>
                             </GroupBox>
                             <GroupBox Width="261.966"
@@ -306,16 +300,10 @@
                                             </Binding>
                                         </TextBox.Text>
                                     </TextBox>
-
                                 </Grid>
                             </GroupBox>
-
-
                         </Grid>
                     </TabItem>
-
-
-
 
                     <TabItem Name="tabitemWaringsetting" Header="警告设置">
                         <Grid />
@@ -329,7 +317,6 @@
                     <TabItem Name="tabitemIOsetting" Header="IO Setting">
                         <Grid />
                     </TabItem>
-
                 </TabControl>
 
                 <Button x:Name="buttonOK"

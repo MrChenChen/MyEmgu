@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Windows.Data;
 
 namespace MyEmgu
 {
     #region 值转换器
-
 
     public class ListBoxLeftWidthConverter : IValueConverter
     {
@@ -34,9 +30,7 @@ namespace MyEmgu
         {
             throw new NotImplementedException();
         }
-
-
     }
 
-    #endregion
+    #endregion 值转换器
 }
