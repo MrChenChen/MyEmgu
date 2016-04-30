@@ -73,6 +73,9 @@
     <Compile Include="DebugQueue.cs" />
     <Compile Include="Detail.cs" />
     <Compile Include="DetailList.cs" />
+    <Compile Include="ImageButton.xaml.cs">
+      <DependentUpon>ImageButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MsgForm.xaml.cs">
       <DependentUpon>MsgForm.xaml</DependentUpon>
     </Compile>
@@ -88,6 +91,10 @@
     </Compile>
     <Compile Include="ValueConverter.cs" />
     <Page Include="Help.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ImageButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

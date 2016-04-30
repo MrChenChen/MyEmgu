@@ -324,21 +324,18 @@
                         Height="27"
                         Margin="308.652,343.649,222.247,15.061"
                         Click="buttonOK_Click"
-                        Content="确定"
-                        Cursor="Hand" />
+                        Content="确定" />
                 <Button x:Name="buttonCancle"
                         Width="79"
                         Height="27"
                         Margin="411.652,343.649,119.247,15.061"
                         Click="buttonCancle_Click"
-                        Content="取消"
-                        Cursor="Hand" />
+                        Content="取消" />
                 <Button x:Name="buttonHelp"
                         Width="79"
                         Height="27"
                         Margin="512.152,343.649,18.747,15.061"
-                        Content="帮助"
-                        Cursor="Hand" />
+                        Content="帮助" />
 
                 <Border Width="15"
                         Height="15"

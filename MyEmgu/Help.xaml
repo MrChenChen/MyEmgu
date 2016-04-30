@@ -60,32 +60,60 @@
                 <RowDefinition Height="124*" />
                 <RowDefinition Height="50*" />
             </Grid.RowDefinitions>
-            <TextBlock Margin="-85.351,32.042,0,104.941"
+            <TextBlock Grid.ColumnSpan="2"
+                       Width="252.725"
+                       Margin="119.663,22.204,0,96.238"
+                       HorizontalAlignment="Left"
                        xml:space="preserve"
-                       FontSize="20"
+                       FontSize="30"
                        FontWeight="Bold"
                        Foreground="{DynamicResource MainColor}"
-                       Text="About My Emgu" Grid.Column="1" HorizontalAlignment="Left" Width="199.75">
+                       Text="About My Emgu">
                 <TextBlock.Effect>
                     <DropShadowEffect Opacity="0.7" ShadowDepth="3" />
                 </TextBlock.Effect>
             </TextBlock>
-
             <FlowDocumentScrollViewer Margin="0,58.799,40.56,65.423"
                                       Focusable="False"
-                                      ScrollViewer.VerticalScrollBarVisibility="Hidden" d:LayoutOverrides="VerticalAlignment">
+                                      IsSelectionEnabled="False"
+                                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                      d:LayoutOverrides="VerticalAlignment">
                 <FlowDocument>
                     <Paragraph>
                         <Run>Conntact Me：</Run>
                     </Paragraph>
                 </FlowDocument>
             </FlowDocumentScrollViewer>
+            <Image x:Name="image"
+                   Grid.Column="1"
+                   Width="38.204"
+                   Height="37.829"
+                   Margin="165.442,23.908,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Source="Icon\github.ico">
+                <Image.Effect>
+                    <DropShadowEffect Opacity="0.5" ShadowDepth="3" />
+                </Image.Effect>
+            </Image>
 
-            <FlowDocumentScrollViewer
+
+            <TextBlock Grid.Column="1"
+                       Width="303.576"
+                       Height="18.314"
+                       Margin="-74.312,0,0,11.706"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       FontSize="14.667">
+                <Hyperlink Click="Hyperlink_Click">https://github.com/MrChenChen/MyEmgu</Hyperlink>
+            </TextBlock>
+
+            <FlowDocumentScrollViewer Grid.Row="1"
                                       Grid.ColumnSpan="2"
                                       Margin="-37.312,-73.179,37.312,22.428"
                                       Focusable="False"
-                                      ScrollViewer.VerticalScrollBarVisibility="Hidden" Grid.Row="1">
+                                      IsSelectionEnabled="False"
+                                      ScrollViewer.VerticalScrollBarVisibility="Hidden">
                 <FlowDocument>
                     <List LineHeight="27">
 
@@ -105,23 +133,13 @@
                 </FlowDocument>
             </FlowDocumentScrollViewer>
 
-
-            <TextBlock
-                       Width="303.576"
-                       Height="18.314"
-                       Margin="-74.312,0,0,11.706"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Bottom" Grid.Column="1" FontSize="14.667">
-                    <Hyperlink Click="Hyperlink_Click" >https://github.com/MrChenChen/MyEmgu</Hyperlink>
-            </TextBlock>
-
             <Button Name="buttonOk"
                     Grid.Row="1"
                     Grid.Column="1"
-                    Margin="108.8,13.189,29.871,20.544"
+                    Margin="112.584,16.594,29.871,20.544"
                     Click="buttonOk_Click"
-                    Content="确定"
-                    Cursor="Hand" />
+                    Content="确定" />
+
         </Grid>
     </Grid>
 </Window>

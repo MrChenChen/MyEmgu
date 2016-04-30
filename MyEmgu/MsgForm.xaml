@@ -71,16 +71,14 @@
                     Width="71"
                     Height="25"
                     Click="buttonOk_Click"
-                    Content="确定"
-                    Cursor="Hand" />
+                    Content="确定" />
             <Button Name="buttonCancle"
                     Grid.Row="1"
                     Grid.Column="1"
                     Width="71"
                     Height="25"
                     Click="buttonCancle_Click"
-                    Content="取消"
-                    Cursor="Hand" />
+                    Content="取消" />
         </Grid>
     </Grid>
 </Window>

@@ -11,6 +11,7 @@
         <local:ListBoxLeftWidthConverter x:Key="ListBoxLeftWidthConverter" />
         <local:ListBoxRightWidthConverter x:Key="ListBoxRightWidthConverter" />
 
+
         <SolidColorBrush x:Key="MainColor" Color="#285A8C" />
         <SolidColorBrush x:Key="TextColor" Color="White" />
 
@@ -596,9 +597,10 @@
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border x:Name="ButtonBorder"
                                 Background="{DynamicResource MainColor}"
-                                BorderBrush="Black"
+                                BorderBrush="#dd000000"
                                 BorderThickness="1">
-                            <ContentPresenter Margin="1"
+                            <ContentPresenter Name="content"
+                                              Margin="1"
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Center"
                                               TextBlock.Foreground="White" />
@@ -606,6 +608,15 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.6" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="#cc000000" />
+                                <Setter TargetName="ButtonBorder" Property="BorderThickness" Value="2,2,2,2" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="#cc000000" />
+                                <Setter TargetName="ButtonBorder" Property="BorderThickness" Value="2,2,2,2" />
+                                <Setter TargetName="content" Property="Margin" Value="1,2,0,0" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -619,63 +630,99 @@
             <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
             <Setter Property="Background" Value="{DynamicResource MainColor}" />
             <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
+            <Setter Property="FlowDirection" Value="RightToLeft"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type MenuItem}">
 
                         <Border>
 
-                            <Grid Height="27">
+                            <Grid Height="27" Name="MainGrid" >
 
-                                <!--
-                                    The Grid is used to hold together columns for an Icon, Content, Glyph checkmark and Arrow to show the next level
-                                    Size sharing is used in Grid so that the Icon, Content, Arrow for each MenuItem align together
-                                -->
+                                <!--The Grid is used to hold together columns for an Icon, Content, Glyph checkmark and Arrow to show the next level Size sharing is used in Grid so that the Icon, Content, Arrow for each MenuItem align together-->
+
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"
-                                                      MinWidth="15"
-                                                      SharedSizeGroup="MenuItemIconColumnGroup" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGTColumnGroup" />
-                                    <ColumnDefinition Width="14" />
+
+                                    <ColumnDefinition Width="18"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGTColumnGroup"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition x:Name="CheckWidth" MinWidth="25" Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup"/>
+
                                 </Grid.ColumnDefinitions>
+
                                 <Border x:Name="Border"
                                         Grid.ColumnSpan="10"
                                         Background="{TemplateBinding Background}"
                                         BorderBrush="Transparent"
                                         BorderThickness="1"
-                                        Opacity="1" />
+                                        Opacity="1" 
+                                        />
 
                                 <!--  子菜单  -->
-                                <!--  ContentPresenter to show an Icon if needed  -->
-                                <ContentPresenter x:Name="Icon"
+                                <!--  ContentPresenter to show an Icon if needed   -->
+                                <ContentPresenter Grid.Column="3" x:Name="Icon"
                                                   Margin="4,0,6,0"
                                                   VerticalAlignment="Center"
                                                   ContentSource="Icon" />
 
-                                <!--  Glyph is a checkmark if needed for a checkable menu  -->
-                                <Grid x:Name="GlyphPanel"
-                                      Margin="6,0,6,0"
+                                <!--  Glyph is a checkmark if needed for a checkable menu   可选  -->
+                                <Grid x:Name="GlyphPanel" Grid.Column="3"
+                                      Margin="8,0,9,0"
                                       VerticalAlignment="Center"
                                       Visibility="Collapsed">
                                     <Path x:Name="GlyphPanelpath"
                                           VerticalAlignment="Center"
                                           Data="M0,2 L0,4.8 L2.5,7.4 L7.1,2.8 L7.1,0 L2.5,4.6 z"
                                           Fill="{TemplateBinding Foreground}"
-                                          FlowDirection="LeftToRight" />
+                                          FlowDirection="RightToLeft" RenderTransformOrigin="0.5,0.5"
+                                          >
+                                        <Path.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform ScaleY="1.44" ScaleX="-1.44"/>
+                                                <SkewTransform AngleY="0" AngleX="0"/>
+                                                <RotateTransform Angle="0"/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </Path.RenderTransform>
+                                    </Path>
                                 </Grid>
+
+                                <!--  Content for the menu text etc   文本  -->
+                                <ContentPresenter x:Name="HeaderHost"
+                                                  Grid.Column="2"
+                                                  HorizontalAlignment="Right"
+                                                  VerticalAlignment="Center"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  ContentSource="Header"
+                                                  RecognizesAccessKey="True"
+                                                  TextBlock.Foreground="{DynamicResource TextColor}" />
+
+                                <!--  Arrow drawn path which points to the next level of the menu 箭头 -->
+                                <Grid x:Name="ArrowPanel"
+                                      Grid.Column="0"
+                                      Margin="6,0,6,0"
+                                      VerticalAlignment="Center">
+                                    <Path x:Name="ArrowPanelPath"
+                                          VerticalAlignment="Center"
+                                          Data="M0,0 L0,8 L4,4 z"
+                                          Fill="{TemplateBinding Foreground}" RenderTransformOrigin="0.5,0.5" >
+                                        <Path.RenderTransform>
+                                            <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                                        </Path.RenderTransform>
+                                    </Path>
+                                </Grid>
+
                                 <!--  The Popup is the body of the menu which expands down or across depending on the level of the item  -->
                                 <Popup x:Name="SubMenuPopup"
                                        AllowsTransparency="true"
                                        Focusable="false"
-                                       IsOpen="{Binding IsSubmenuOpen,
-                                                        RelativeSource={RelativeSource TemplatedParent}}"
-                                       Placement="Right"
+                                       IsOpen="{Binding IsSubmenuOpen,RelativeSource={RelativeSource TemplatedParent}}"
+                                       Placement="Bottom"
                                        PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
-                                       VerticalOffset="0">
-                                    <Grid x:Name="SubMenu">
+                                       >
+                                    <Grid x:Name="SubMenu" >
                                         <Grid.Effect>
-                                            <DropShadowEffect Opacity="0.5" />
+                                            <DropShadowEffect Opacity="1" />
                                         </Grid.Effect>
                                         <Border x:Name="SubMenuBorder"
                                                 Background="{DynamicResource MainColor}"
@@ -687,29 +734,10 @@
                                         </Border>
 
                                         <!--  StackPanel holds children of the menu. This is set bu IsItemsHost=True  -->
-                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" Margin="4,4,4,5"/>
                                     </Grid>
                                 </Popup>
 
-                                <!--  Content for the menu text etc  -->
-                                <ContentPresenter x:Name="HeaderHost"
-                                                  Grid.Column="1"
-                                                  Margin="{TemplateBinding Padding}"
-                                                  HorizontalAlignment="Left"
-                                                  ContentSource="Header"
-                                                  RecognizesAccessKey="True"
-                                                  TextBlock.Foreground="{DynamicResource TextColor}" />
-
-                                <!--  Arrow drawn path which points to the next level of the menu  -->
-                                <Grid x:Name="ArrowPanel"
-                                      Grid.Column="3"
-                                      Margin="4,0,6,0"
-                                      VerticalAlignment="Center">
-                                    <Path x:Name="ArrowPanelPath"
-                                          VerticalAlignment="Center"
-                                          Data="M0,0 L0,8 L4,4 z"
-                                          Fill="{TemplateBinding Foreground}" />
-                                </Grid>
                             </Grid>
                         </Border>
 
@@ -719,17 +747,17 @@
                             <!--  Role = TopLevelHeader : this is the root menu item in a menu; the Popup expands down  -->
                             <Trigger Property="Role" Value="TopLevelHeader">
                                 <Setter Property="Margin" Value="0,1,0,1" />
-                                <Setter Property="Padding" Value="6,3,6,3" />
+                                <!--<Setter Property="Padding" Value="6,3,6,3" />-->
                                 <Setter Property="Grid.IsSharedSizeScope" Value="true" />
-                                <Setter TargetName="SubMenuPopup" Property="Placement" Value="Bottom" />
                                 <Setter TargetName="ArrowPanel" Property="Visibility" Value="Collapsed" />
+                                <Setter TargetName="CheckWidth" Property="MinWidth" Value="18" />
                             </Trigger>
 
                             <!--  Role = TopLevelItem :  this is a child menu item from the top level without any child items  -->
                             <Trigger Property="Role" Value="TopLevelItem">
-                                <Setter Property="Margin" Value="0,1,0,1" />
-                                <Setter Property="Padding" Value="6,3,6,3" />
+                                <Setter Property="Margin" Value="3" />
                                 <Setter TargetName="ArrowPanel" Property="Visibility" Value="Collapsed" />
+                                
                             </Trigger>
 
                             <!--  Role = SubMenuHeader : this is a child menu item which does not have children  -->
@@ -737,6 +765,10 @@
                                 <Setter Property="DockPanel.Dock" Value="Top" />
                                 <Setter Property="Padding" Value="0,2,0,2" />
                                 <Setter Property="Grid.IsSharedSizeScope" Value="true" />
+                                <Setter TargetName="CheckWidth" Property="MinWidth" Value="18" />
+                                <Setter Property="Placement" Value="Right" TargetName="SubMenuPopup"/>
+                                <Setter Property="HorizontalOffset" Value="3" TargetName="SubMenuPopup"/>
+                                
                             </Trigger>
 
                             <!--  Role = SubMenuItem : this is a child menu item which has children  -->
@@ -744,7 +776,10 @@
                                 <Setter Property="DockPanel.Dock" Value="Top" />
                                 <Setter Property="Padding" Value="0,2,0,2" />
                                 <Setter TargetName="ArrowPanel" Property="Visibility" Value="Collapsed" />
+                                
                             </Trigger>
+
+
                             <Trigger Property="IsSuspendingPopupAnimation" Value="true">
                                 <Setter TargetName="SubMenuPopup" Property="PopupAnimation" Value="None" />
                             </Trigger>
@@ -761,14 +796,15 @@
                             </Trigger>
 
                             <Trigger SourceName="SubMenuPopup" Property="AllowsTransparency" Value="true">
-                                <Setter TargetName="SubMenu" Property="Margin" Value="0,0,3,3" />
+                                <Setter TargetName="SubMenu" Property="Margin" Value="3,3,0,0" />
                                 <Setter TargetName="SubMenu" Property="SnapsToDevicePixels" Value="true" />
                                 <Setter TargetName="SubMenuBorder" Property="BitmapEffect" Value="{DynamicResource PopupDropShadow}" />
+
                             </Trigger>
 
-                            <Trigger Property="IsMouseOver" Value="true">
+                            <!--<Trigger Property="IsMouseOver" Value="true">
                                 <Setter TargetName="SubMenuPopup" Property="IsOpen" Value="true" />
-                            </Trigger>
+                            </Trigger>-->
 
                             <!--  Using the system colors for the Menu Highlight and IsEnabled  -->
                             <Trigger Property="IsHighlighted" Value="true">

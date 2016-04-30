@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace MyEmgu
@@ -31,6 +32,6 @@ namespace MyEmgu
             throw new NotImplementedException();
         }
     }
-
+    
     #endregion 值转换器
 }
