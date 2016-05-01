@@ -630,23 +630,25 @@
             <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
             <Setter Property="Background" Value="{DynamicResource MainColor}" />
             <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
-            <Setter Property="FlowDirection" Value="RightToLeft"></Setter>
+            <Setter Property="FlowDirection" Value="RightToLeft" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type MenuItem}">
 
                         <Border>
 
-                            <Grid Height="27" Name="MainGrid" >
+                            <Grid Name="MainGrid" Height="27">
 
-                                <!--The Grid is used to hold together columns for an Icon, Content, Glyph checkmark and Arrow to show the next level Size sharing is used in Grid so that the Icon, Content, Arrow for each MenuItem align together-->
+                                <!--  The Grid is used to hold together columns for an Icon, Content, Glyph checkmark and Arrow to show the next level Size sharing is used in Grid so that the Icon, Content, Arrow for each MenuItem align together  -->
 
                                 <Grid.ColumnDefinitions>
 
-                                    <ColumnDefinition Width="18"/>
-                                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGTColumnGroup"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition x:Name="CheckWidth" MinWidth="25" Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup"/>
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGTColumnGroup" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition x:Name="CheckWidth"
+                                                      Width="16"
+                                                      SharedSizeGroup="MenuItemIconColumnGroup" />
 
                                 </Grid.ColumnDefinitions>
 
@@ -655,72 +657,17 @@
                                         Background="{TemplateBinding Background}"
                                         BorderBrush="Transparent"
                                         BorderThickness="1"
-                                        Opacity="1" 
-                                        />
-
-                                <!--  子菜单  -->
-                                <!--  ContentPresenter to show an Icon if needed   -->
-                                <ContentPresenter Grid.Column="3" x:Name="Icon"
-                                                  Margin="4,0,6,0"
-                                                  VerticalAlignment="Center"
-                                                  ContentSource="Icon" />
-
-                                <!--  Glyph is a checkmark if needed for a checkable menu   可选  -->
-                                <Grid x:Name="GlyphPanel" Grid.Column="3"
-                                      Margin="8,0,9,0"
-                                      VerticalAlignment="Center"
-                                      Visibility="Collapsed">
-                                    <Path x:Name="GlyphPanelpath"
-                                          VerticalAlignment="Center"
-                                          Data="M0,2 L0,4.8 L2.5,7.4 L7.1,2.8 L7.1,0 L2.5,4.6 z"
-                                          Fill="{TemplateBinding Foreground}"
-                                          FlowDirection="RightToLeft" RenderTransformOrigin="0.5,0.5"
-                                          >
-                                        <Path.RenderTransform>
-                                            <TransformGroup>
-                                                <ScaleTransform ScaleY="1.44" ScaleX="-1.44"/>
-                                                <SkewTransform AngleY="0" AngleX="0"/>
-                                                <RotateTransform Angle="0"/>
-                                                <TranslateTransform/>
-                                            </TransformGroup>
-                                        </Path.RenderTransform>
-                                    </Path>
-                                </Grid>
-
-                                <!--  Content for the menu text etc   文本  -->
-                                <ContentPresenter x:Name="HeaderHost"
-                                                  Grid.Column="2"
-                                                  HorizontalAlignment="Right"
-                                                  VerticalAlignment="Center"
-                                                  Margin="{TemplateBinding Padding}"
-                                                  ContentSource="Header"
-                                                  RecognizesAccessKey="True"
-                                                  TextBlock.Foreground="{DynamicResource TextColor}" />
-
-                                <!--  Arrow drawn path which points to the next level of the menu 箭头 -->
-                                <Grid x:Name="ArrowPanel"
-                                      Grid.Column="0"
-                                      Margin="6,0,6,0"
-                                      VerticalAlignment="Center">
-                                    <Path x:Name="ArrowPanelPath"
-                                          VerticalAlignment="Center"
-                                          Data="M0,0 L0,8 L4,4 z"
-                                          Fill="{TemplateBinding Foreground}" RenderTransformOrigin="0.5,0.5" >
-                                        <Path.RenderTransform>
-                                            <ScaleTransform ScaleY="1" ScaleX="-1"/>
-                                        </Path.RenderTransform>
-                                    </Path>
-                                </Grid>
+                                        Opacity="1" />
 
                                 <!--  The Popup is the body of the menu which expands down or across depending on the level of the item  -->
                                 <Popup x:Name="SubMenuPopup"
                                        AllowsTransparency="true"
                                        Focusable="false"
-                                       IsOpen="{Binding IsSubmenuOpen,RelativeSource={RelativeSource TemplatedParent}}"
+                                       IsOpen="{Binding IsSubmenuOpen,
+                                                        RelativeSource={RelativeSource TemplatedParent}}"
                                        Placement="Bottom"
-                                       PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
-                                       >
-                                    <Grid x:Name="SubMenu" >
+                                       PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
+                                    <Grid x:Name="SubMenu">
                                         <Grid.Effect>
                                             <DropShadowEffect Opacity="1" />
                                         </Grid.Effect>
@@ -734,9 +681,68 @@
                                         </Border>
 
                                         <!--  StackPanel holds children of the menu. This is set bu IsItemsHost=True  -->
-                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" Margin="4,4,4,5"/>
+                                        <StackPanel Margin="4,4,4,5"
+                                                    IsItemsHost="True"
+                                                    KeyboardNavigation.DirectionalNavigation="Cycle" />
                                     </Grid>
                                 </Popup>
+
+                                <!--  Arrow drawn path which points to the next level of the menu 箭头  -->
+                                <Grid x:Name="ArrowPanel"
+                                      Grid.Column="0"
+                                      Margin="6,0,8,0"
+                                      VerticalAlignment="Center">
+                                    <Path x:Name="ArrowPanelPath"
+                                          VerticalAlignment="Center"
+                                          Data="M0,0 L0,8 L4,4 z"
+                                          Fill="{TemplateBinding Foreground}"
+                                          RenderTransformOrigin="0.5,0.5">
+                                        <Path.RenderTransform>
+                                            <ScaleTransform ScaleX="-1" ScaleY="1" />
+                                        </Path.RenderTransform>
+                                    </Path>
+                                </Grid>
+
+                                <!--  Content for the menu text etc   文本  -->
+                                <ContentPresenter x:Name="HeaderHost"
+                                                  Grid.Column="2"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="Right"
+                                                  VerticalAlignment="Center"
+                                                  ContentSource="Header"
+                                                  RecognizesAccessKey="True"
+                                                  TextBlock.Foreground="{DynamicResource TextColor}" />
+
+                                <!--  子菜单  -->
+                                <!--  ContentPresenter to show an Icon if needed  -->
+                                <ContentPresenter x:Name="Icon"
+                                                  Grid.Column="3"
+                                                  Margin="4,0,6,0"
+                                                  VerticalAlignment="Center"
+                                                  ContentSource="Icon" />
+
+                                <!--  Glyph is a checkmark if needed for a checkable menu   可选  -->
+                                <Grid x:Name="GlyphPanel"
+                                      Grid.Column="3"
+                                      Margin="8,0,9,0"
+                                      VerticalAlignment="Center"
+                                      Visibility="Collapsed">
+                                    <Path x:Name="GlyphPanelpath"
+                                          VerticalAlignment="Center"
+                                          Data="M0,2 L0,4.8 L2.5,7.4 L7.1,2.8 L7.1,0 L2.5,4.6 z"
+                                          Fill="{TemplateBinding Foreground}"
+                                          FlowDirection="RightToLeft"
+                                          RenderTransformOrigin="0.5,0.5">
+                                        <Path.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform ScaleX="-1.44" ScaleY="1.44" />
+                                                <SkewTransform AngleX="0" AngleY="0" />
+                                                <RotateTransform Angle="0" />
+                                                <TranslateTransform />
+                                            </TransformGroup>
+                                        </Path.RenderTransform>
+                                    </Path>
+                                </Grid>
 
                             </Grid>
                         </Border>
@@ -750,14 +756,14 @@
                                 <!--<Setter Property="Padding" Value="6,3,6,3" />-->
                                 <Setter Property="Grid.IsSharedSizeScope" Value="true" />
                                 <Setter TargetName="ArrowPanel" Property="Visibility" Value="Collapsed" />
-                                <Setter TargetName="CheckWidth" Property="MinWidth" Value="18" />
+
                             </Trigger>
 
                             <!--  Role = TopLevelItem :  this is a child menu item from the top level without any child items  -->
                             <Trigger Property="Role" Value="TopLevelItem">
                                 <Setter Property="Margin" Value="3" />
                                 <Setter TargetName="ArrowPanel" Property="Visibility" Value="Collapsed" />
-                                
+
                             </Trigger>
 
                             <!--  Role = SubMenuHeader : this is a child menu item which does not have children  -->
@@ -765,10 +771,9 @@
                                 <Setter Property="DockPanel.Dock" Value="Top" />
                                 <Setter Property="Padding" Value="0,2,0,2" />
                                 <Setter Property="Grid.IsSharedSizeScope" Value="true" />
-                                <Setter TargetName="CheckWidth" Property="MinWidth" Value="18" />
-                                <Setter Property="Placement" Value="Right" TargetName="SubMenuPopup"/>
-                                <Setter Property="HorizontalOffset" Value="3" TargetName="SubMenuPopup"/>
-                                
+                                <Setter TargetName="SubMenuPopup" Property="Placement" Value="Right" />
+                                <Setter TargetName="SubMenuPopup" Property="HorizontalOffset" Value="3" />
+                                <Setter TargetName="CheckWidth" Property="Width" Value="25" />
                             </Trigger>
 
                             <!--  Role = SubMenuItem : this is a child menu item which has children  -->
@@ -776,7 +781,7 @@
                                 <Setter Property="DockPanel.Dock" Value="Top" />
                                 <Setter Property="Padding" Value="0,2,0,2" />
                                 <Setter TargetName="ArrowPanel" Property="Visibility" Value="Collapsed" />
-                                
+                                <Setter TargetName="CheckWidth" Property="Width" Value="25" />
                             </Trigger>
 
 
@@ -900,7 +905,7 @@
             </Setter>
         </Style>
 
-
+        
 
     </Application.Resources>
 </Application>

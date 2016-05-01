@@ -25,7 +25,7 @@ namespace MyEmgu
         private DetailList myDetailList = DetailList.GetOnlyInstance();
         private DispatcherTimer timer = new DispatcherTimer();
 
-        private Point last_Point = new Point();
+        private Rect last_Rect = new Rect();
 
         public MainWindow()
         {
@@ -33,14 +33,14 @@ namespace MyEmgu
 
             m_hwnd = new WindowInteropHelper(this).Handle;
 
-            var rect = new System.Drawing.Rectangle();
-            var baredge = new AppBarEdge();
-            var barstatus = new AppBarStates();
+            //var rect = new System.Drawing.Rectangle();
+            //var baredge = new AppBarEdge();
+            //var barstatus = new AppBarStates();
 
-            GetTaskbarPosInfo(ref rect, ref baredge, ref barstatus);
+            //GetTaskbarPosInfo(ref rect, ref baredge, ref barstatus);
 
-            MaxWidth = rect.Width + 20;
-            MaxHeight = rect.Y + 10;
+            //MaxWidth = rect.Width + 20;
+            //MaxHeight = rect.Y + 10;
 
             nowtime.Text = DateTime.Now.ToString();
             timer.Interval = new TimeSpan(0, 0, 1);
@@ -57,11 +57,6 @@ namespace MyEmgu
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            //Width = SystemParameters.PrimaryScreenWidth;
-            //Height = SystemParameters.PrimaryScreenHeight;
-            //Left = 0;
-            //Top = 0;
-
             SystemConfig.st = SysStation.MI;
 
             myDetailList.Init();
@@ -69,7 +64,7 @@ namespace MyEmgu
             listBoxDetail.ItemsSource = myDetailList;
             listboxDebug.ItemsSource = myDebugQueue;
 
-            LoadMainFormLanguage();
+            //LoadMainFormLanguage();
 
 
         }
@@ -268,14 +263,22 @@ namespace MyEmgu
 
         private void Max_MouseUp(object sender, MouseButtonEventArgs e)
         {
+
             if (WindowState != WindowState.Maximized)
             {
+                last_Rect.X = Left;
+                last_Rect.Y = Top;
                 WindowState = WindowState.Maximized;
             }
             else
             {
                 WindowState = WindowState.Normal;
+                Left = last_Rect.X;
+                Top = last_Rect.Y;
             }
+
+
+
         }
 
         private void Min_MouseUp(object sender, MouseButtonEventArgs e)
@@ -298,7 +301,8 @@ namespace MyEmgu
         //相机设置
         private void buttonCameraSetting_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(Width.ToString() + " , " + Height.ToString());
+            var x = GetCurourPosition();
+            MessageBox.Show(x.X.ToString() + " , " + x.Y.ToString());
         }
 
         // 重置 刷新
@@ -390,25 +394,36 @@ namespace MyEmgu
 
         #region WPF 窗体相关 消息循环
 
-        private void Title_MouseLeftDown(object sender, MouseButtonEventArgs e)
+
+        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            last_Point.X = e.GetPosition(this).X;
 
-            if (e.ClickCount >= 2)
+            if (e.ClickCount == 1)
             {
-                if (WindowState == WindowState.Maximized)
+                if (WindowState != WindowState.Maximized)
                 {
-                    Console.WriteLine("Title_MouseLeftDown");
+                    last_Rect.X = Left;
+                    last_Rect.Y = Top;
+                    last_Rect.Width = Width;
+                    last_Rect.Height = Height;
 
-                    WindowState = WindowState.Normal;
                 }
-                else
+            }
+            else if (e.ClickCount >= 2)
+            {
+                if (WindowState != WindowState.Maximized)
                 {
                     WindowState = WindowState.Maximized;
                 }
+                else
+                {
+                    WindowState = WindowState.Normal;
+
+                    Left = last_Rect.X;
+                    Top = last_Rect.Y;
+                }
                 return;
             }
-
 
 
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -417,25 +432,37 @@ namespace MyEmgu
             }
         }
 
+
         private void Title_MouseMove(object sender, MouseEventArgs e)
         {
+            var temp = Mouse.GetPosition(this);
 
+            var Global = GetCurourPosition();
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (WindowState == WindowState.Maximized)
-                {
-                    Console.WriteLine("Title_MouseMove");
-
-                    WindowState = WindowState.Normal;
-
-                    Left = last_Point.X / 2;
 
 
-                }
+                //if (WindowState == WindowState.Maximized)
+                //{
+                //    Console.WriteLine("Title_MouseMove");
+
+                //    WindowState = WindowState.Normal;
+
+                //    //Left = (Global.X - temp.X / SystemParameters.PrimaryScreenWidth * 1024);
+
+                //    //Top = -Global.Y;
+
+
+                //    Left = last_Rect.X;
+                //    Top = last_Rect.Y;
+
+                //}
+
             }
 
         }
+
 
         protected override Size ArrangeOverride(Size arrangeBounds)
         {
@@ -603,6 +630,13 @@ namespace MyEmgu
             }
         }
 
+
+        Point GetCurourPosition()
+        {
+            System.Drawing.Point pos = new System.Drawing.Point();
+            GetCursorPos(ref pos);
+            return new System.Windows.Point(pos.X / 1.5, pos.Y / 1.5);
+        }
 
 
 

@@ -3,18 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:MyEmgu"
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        Name="mainwin"
         Title="MainWindow"
         Width="1024"
         Height="768"
         AllowsTransparency="True"
         Icon="Icon\github.ico"
         Loaded="Window_Loaded"
-        ResizeMode="CanResizeWithGrip"
         SnapsToDevicePixels="True"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
-        Name="mainwin"
-        >
+        WindowStyle="None">
 
 
     <Window.Template>
@@ -26,11 +24,193 @@
                                       Opacity="1"
                                       ShadowDepth="0" />
                 </Border.Effect>
-                <Border Margin="5">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <!--  标题栏 区域  -->
+                    <Border Name="PART_TITLEBAR"
+                            Background="{DynamicResource MainColor}"
+                            MouseLeftButtonDown="TitleBar_MouseLeftButtonDown"
+                            MouseMove="Title_MouseMove">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0" />
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="140" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image Grid.Column="1"
+                                   Margin="4"
+                                   Source="{Binding Icon,
+                                                    ElementName=mainwin}" />
+
+                            <TextBlock Grid.Column="2"
+                                       Margin="5,0,0,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       FontSize="16"
+                                       Foreground="{DynamicResource TextColor}"
+                                       Text="{Binding ElementName=mainwin,
+                                                      Path=Title}" />
+
+                        </Grid>
+
+                    </Border>
+
+                    <!--#region  3 个右上角按钮-->
+
+                    <Border Name="PART_MINIMIZ"
+                            Width="34"
+                            Height="30"
+                            Margin="0,0,68,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Background="Transparent"
+                            MouseUp="Min_MouseUp">
+                        <Grid>
+                            <Border Name="MinBackBorder"
+                                    Background="White"
+                                    Opacity="0" />
+                            <Grid Margin="12,10,12,10">
+                                <Path Name="MinLines"
+                                      Stroke="White"
+                                      StrokeThickness="2">
+                                    <Path.Data>
+                                        <LineGeometry StartPoint="0,10" EndPoint="10,10" />
+                                    </Path.Data>
+                                </Path>
+                            </Grid>
+                        </Grid>
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Border.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.1"
+                                                         Storyboard.TargetName="MinBackBorder"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.4" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Border.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.1"
+                                                         Storyboard.TargetName="MinBackBorder"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                    </Border>
+
+                    <Border Name="PART_MAXIMIZE_RESTORE"
+                            Width="34"
+                            Height="30"
+                            Margin="0,0,34,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Background="Transparent"
+                            MouseUp="Max_MouseUp">
+                        <Grid>
+                            <Border Name="MaxBackBorder"
+                                    Background="White"
+                                    Opacity="0" />
+                            <Grid Margin="12,10,12,10">
+                                <Path Name="MaxLines"
+                                      Stroke="White"
+                                      StrokeThickness="2">
+                                    <Path.Data>
+                                        <GeometryGroup>
+
+                                            <RectangleGeometry Rect="0,0,10,10" />
+                                        </GeometryGroup>
+                                    </Path.Data>
+                                </Path>
+                            </Grid>
+                        </Grid>
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Border.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.1"
+                                                         Storyboard.TargetName="MaxBackBorder"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.4" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Border.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.1"
+                                                         Storyboard.TargetName="MaxBackBorder"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                    </Border>
+
+                    <Border Name="PART_CLOSE"
+                            Width="34"
+                            Height="30"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Background="Transparent"
+                            MouseUp="Exit_MouseUp">
+                        <Grid>
+                            <Border Name="CloseBackBorder"
+                                    Background="Red"
+                                    Opacity="0" />
+                            <Grid Margin="12,10,12,10">
+                                <Path Name="CloseLines"
+                                      Stroke="White"
+                                      StrokeThickness="1">
+                                    <Path.Data>
+                                        <GeometryGroup>
+                                            <LineGeometry StartPoint="0,0" EndPoint="10,10" />
+                                            <LineGeometry StartPoint="10,0" EndPoint="0,10" />
+                                        </GeometryGroup>
+                                    </Path.Data>
+                                </Path>
+                            </Grid>
+                        </Grid>
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Border.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.1"
+                                                         Storyboard.TargetName="CloseBackBorder"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.7" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Border.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.1"
+                                                         Storyboard.TargetName="CloseBackBorder"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                    </Border>
+
+                    <!--  主界面区域  -->
                     <ContentPresenter Grid.Row="1"
                                       Margin="{TemplateBinding Padding}"
                                       Content="{TemplateBinding Content}" />
-                </Border>
+                </Grid>
             </Border>
         </ControlTemplate>
     </Window.Template>
@@ -40,198 +220,28 @@
     <Grid Background="White">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="149" />
+            <RowDefinition Height="119" />
             <RowDefinition Height="631*" />
         </Grid.RowDefinitions>
 
         <Grid>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="30" />
                 <RowDefinition Height="29" />
-                <RowDefinition Height="80*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <!--  菜单栏  -->
-
-            <Border Name="TitleBar"
-                    Background="{DynamicResource MainColor}"
-                    MouseLeftButtonDown="Title_MouseLeftDown"
-                    MouseMove="Title_MouseMove" 
-                    >
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0" ></ColumnDefinition>
-                        <ColumnDefinition Width="30" ></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition Width="140"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-
-                    <Image Grid.Column="1" Source="{Binding Icon,ElementName=mainwin}" Margin="4"></Image>
-
-                    <TextBlock Grid.Column="2" Text="{Binding ElementName=mainwin,Path=Title}" Margin="5,0,0,0" FontSize="16" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-
-                </Grid>
-
-            </Border>
-
-            <!--#region  3 个右上角按钮-->
-
-            <Border Name="MinBorder"
-                    Width="34"
-                    Height="30"
-                    Margin="0,0,68,0"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Background="Transparent"
-                    MouseUp="Min_MouseUp">
-                <Grid>
-                    <Border Name="MinBackBorder"
-                            Background="White"
-                            Opacity="0" />
-                    <Grid Margin="12,10,12,10">
-                        <Path Name="MinLines"
-                              Stroke="White"
-                              StrokeThickness="2">
-                            <Path.Data>
-                                <LineGeometry StartPoint="0,10" EndPoint="10,10" />
-                            </Path.Data>
-                        </Path>
-                    </Grid>
-                </Grid>
-                <Border.Triggers>
-                    <EventTrigger RoutedEvent="Border.MouseEnter">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Duration="0:0:0.1"
-                                                 Storyboard.TargetName="MinBackBorder"
-                                                 Storyboard.TargetProperty="Opacity"
-                                                 To="0.4" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                    <EventTrigger RoutedEvent="Border.MouseLeave">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Duration="0:0:0.1"
-                                                 Storyboard.TargetName="MinBackBorder"
-                                                 Storyboard.TargetProperty="Opacity"
-                                                 To="0" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </Border.Triggers>
-            </Border>
-
-            <Border Name="MaxBorder"
-                    Width="34"
-                    Height="30"
-                    Margin="0,0,34,0"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Background="Transparent"
-                    MouseUp="Max_MouseUp">
-                <Grid>
-                    <Border Name="MaxBackBorder"
-                            Background="White"
-                            Opacity="0" />
-                    <Grid Margin="12,10,12,10">
-                        <Path Name="MaxLines"
-                              Stroke="White"
-                              StrokeThickness="2">
-                            <Path.Data>
-                                <GeometryGroup>
-
-                                    <RectangleGeometry Rect="0,0,10,10" />
-                                </GeometryGroup>
-                            </Path.Data>
-                        </Path>
-                    </Grid>
-                </Grid>
-                <Border.Triggers>
-                    <EventTrigger RoutedEvent="Border.MouseEnter">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Duration="0:0:0.1"
-                                                 Storyboard.TargetName="MaxBackBorder"
-                                                 Storyboard.TargetProperty="Opacity"
-                                                 To="0.4" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                    <EventTrigger RoutedEvent="Border.MouseLeave">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Duration="0:0:0.1"
-                                                 Storyboard.TargetName="MaxBackBorder"
-                                                 Storyboard.TargetProperty="Opacity"
-                                                 To="0" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </Border.Triggers>
-            </Border>
-
-            <Border Name="ExitBorder"
-                    Width="34"
-                    Height="30"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Background="Transparent"
-                    MouseUp="Exit_MouseUp">
-                <Grid>
-                    <Border Name="CloseBackBorder"
-                            Background="Red"
-                            Opacity="0" />
-                    <Grid Margin="12,10,12,10">
-                        <Path Name="CloseLines"
-                              Stroke="White"
-                              StrokeThickness="1">
-                            <Path.Data>
-                                <GeometryGroup>
-                                    <LineGeometry StartPoint="0,0" EndPoint="10,10" />
-                                    <LineGeometry StartPoint="10,0" EndPoint="0,10" />
-                                </GeometryGroup>
-                            </Path.Data>
-                        </Path>
-                    </Grid>
-                </Grid>
-                <Border.Triggers>
-                    <EventTrigger RoutedEvent="Border.MouseEnter">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Duration="0:0:0.1"
-                                                 Storyboard.TargetName="CloseBackBorder"
-                                                 Storyboard.TargetProperty="Opacity"
-                                                 To="0.7" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                    <EventTrigger RoutedEvent="Border.MouseLeave">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Duration="0:0:0.1"
-                                                 Storyboard.TargetName="CloseBackBorder"
-                                                 Storyboard.TargetProperty="Opacity"
-                                                 To="0" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </Border.Triggers>
-            </Border>
-
-            <Border Grid.Row="1">
+            <Border Grid.Row="0">
                 <Menu x:Name="menu"
                       Margin="0,0"
-                      
                       Background="{DynamicResource MainColor}"
                       TextBlock.FontSize="15"
                       TextBlock.FontWeight="Normal">
 
-                    <MenuItem Name="menuFile"
-                              Header="文件"
-                              >
-                        <MenuItem Header="装载配置文件" TextBlock.FontWeight="Normal" IsCheckable="True"/>
+                    <MenuItem Name="menuFile" Header="文件">
+                        <MenuItem Header="装载配置文件"
+                                  IsCheckable="True"
+                                  TextBlock.FontWeight="Normal" />
                         <MenuItem Header="保存配置文件" TextBlock.FontWeight="Normal" />
                         <MenuItem Header="装载教授文件" TextBlock.FontWeight="Normal" />
                         <MenuItem Header="建立新的教授文件" TextBlock.FontWeight="Normal" />
@@ -242,16 +252,16 @@
                                   TextBlock.FontWeight="Normal" />
                     </MenuItem>
                     <MenuItem Name="menuConfig"
+                              Height="29"
+                              Margin="0"
                               Background="{DynamicResource MainColor}"
-                              Header="配置" Height="29" Margin="0"
-                              >
-                        <MenuItem Header="测试   0"></MenuItem>
+                              Header="配置">
+                        <MenuItem Header="测试   0" />
                     </MenuItem>
 
                     <MenuItem Name="menuSecurity"
                               Background="{DynamicResource MainColor}"
-                              Header="安全"
-                              >
+                              Header="安全">
                         <MenuItem Click="HigherLevel_Click"
                                   Header="提高安全等级"
                                   TextBlock.FontWeight="Normal" />
@@ -259,38 +269,36 @@
 
                     <MenuItem Name="menuTools"
                               Background="{DynamicResource MainColor}"
-                              Header="工具"
-                              >
+                              Header="工具">
                         <MenuItem Click="menuShowDebugInfo_Click"
                                   Header="显示调试信息"
-                                  IsChecked="True" >
-                        </MenuItem>
+                                  IsChecked="True" />
+                        <MenuItem Header="测试 -- 1" />
                     </MenuItem>
 
                     <MenuItem Name="menuReport"
+                              Height="29"
+                              Margin="0"
                               Background="{DynamicResource MainColor}"
-                              Header="报告" Height="29" Margin="0" 
-                              />
+                              Header="报告" />
 
                     <MenuItem Name="menuHelp"
                               Background="{DynamicResource MainColor}"
-                              Click="menuHelp_Click"
-                              Header="帮助"
-                              >
-                        <MenuItem Header="关于本程序" TextBlock.FontWeight="Normal" />
+                              Header="帮助">
+                        <MenuItem Click="menuHelp_Click" Header="关于本程序" />
 
-                        <MenuItem Header="测试   1" TextBlock.FontWeight="Normal" >
+                        <MenuItem Header="测试   1" TextBlock.FontWeight="Normal">
                             <MenuItem Header="测试   3" TextBlock.FontWeight="Normal" />
                             <MenuItem Header="测试   4" TextBlock.FontWeight="Normal" />
                         </MenuItem>
 
-                        <MenuItem Header="测试   2" TextBlock.FontWeight="Normal" >
+                        <MenuItem Header="测试   2" TextBlock.FontWeight="Normal">
                             <MenuItem Header="测试   5" TextBlock.FontWeight="Normal" />
                             <MenuItem Header="测试   6" TextBlock.FontWeight="Normal" />
                             <MenuItem Header="测试   7" TextBlock.FontWeight="Normal" />
                         </MenuItem>
 
-                        <MenuItem Header="测试   8" TextBlock.FontWeight="Normal" >
+                        <MenuItem Header="测试   8" TextBlock.FontWeight="Normal">
                             <MenuItem Header="测试   9" TextBlock.FontWeight="Normal" />
                             <MenuItem Header="测试   10" TextBlock.FontWeight="Normal" />
                             <MenuItem Header="测试   11" TextBlock.FontWeight="Normal" />
@@ -303,7 +311,7 @@
 
             <!--#endregion-->
 
-            <Border Grid.Row="2" Background="{DynamicResource MainColor}">
+            <Border Grid.Row="1" Background="{DynamicResource MainColor}">
 
                 <!--#region  7个大按钮-->
                 <Grid Margin="0,0,0,0">
@@ -424,7 +432,7 @@
         </Grid>
 
         <!--  主窗体布局  -->
-        <Grid Grid.Row="1" Grid.RowSpan="2">
+        <Grid Grid.Row="2" Grid.RowSpan="2">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="100" />
@@ -444,18 +452,12 @@
 
             <!--  系统标志  -->
             <Border Name="StatusBorder"
-                    Width="{Binding ElementName=groupBoxInfo,
-                                    Path=ActualWidth,
-                                    Mode=OneWay}"
                     Margin="10,10,10,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     BorderBrush="{DynamicResource MainColor}"
                     BorderThickness="0">
                 <TextBlock Name="textStatus"
-                           Width="150"
-                           Height="70"
-                           Margin="25.5,11"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontSize="45"
@@ -471,17 +473,18 @@
                           Width="3"
                           HorizontalAlignment="Right"
                           Background="{DynamicResource MainColor}" />
+            
             <Border Grid.RowSpan="10"
-                    Grid.Column="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="10"
                     BorderBrush="{DynamicResource MainColor}"
-                    BorderThickness="0,0,2,0" />
+                    BorderThickness="1" />
 
             <Grid Grid.Row="0"
                   Grid.RowSpan="3"
                   Grid.Column="1"
                   Background="Transparent">
                 <Grid.RowDefinitions>
-                    <!--    -->
                     <RowDefinition Height="145*" />
                     <RowDefinition Height="150" />
                 </Grid.RowDefinitions>
@@ -498,11 +501,9 @@
                        VerticalAlignment="Top" />
 
 
-
-
-
             </Grid>
 
+            
             <!--  检测信息  -->
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -546,9 +547,6 @@
 
             <!--  重置计数按钮  -->
             <Border Grid.Row="2"
-                    Width="{Binding ElementName=groupBoxInfo,
-                                    Path=ActualWidth,
-                                    Mode=OneWay}"
                     Margin="10,40,10,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -613,7 +611,7 @@
             <!--  调试信息面板  -->
             <Grid Grid.Row="2" Grid.Column="1">
                 <Border Name="borderDebug"
-                        Margin="-1,1,1,-1"
+                        Margin="-1,1,0,-1"
                         Background="#FF74A9CD"
                         BorderBrush="{DynamicResource MainColor}"
                         BorderThickness="1">
@@ -653,7 +651,7 @@
                     Grid.ColumnSpan="10"
                     Background="Transparent"
                     BorderBrush="{DynamicResource MainColor}"
-                    BorderThickness="0,2,0,0">
+                    BorderThickness="0,1,0,1">
                 <TextBlock Name="textWorkpath"
                            Margin="3,0,0,0"
                            HorizontalAlignment="Left"
@@ -671,14 +669,15 @@
                 <TextBlock x:Name="nowtime"
                            Grid.Row="3"
                            Grid.Column="1"
-                           Height="27.333"
-                           Margin="5,10,5,0"
+                           
+                           Margin="5,5,5,5"
                            HorizontalAlignment="Right"
                            VerticalAlignment="Center"
                            FontSize="15"
                            FontWeight="Bold"
                            TextAlignment="Center" />
             </Border>
+            
         </Grid>
 
         <!--<Button  Name="buttonExit" HorizontalAlignment="Right"  Content="EXIT" FontSize="16" FontWeight="Bold" VerticalAlignment="Bottom" Height="32.898" Width="113.887"  Grid.Row="1" Margin="0,0,24.75,50.833" Cursor="Hand" SnapsToDevicePixels="True" />-->

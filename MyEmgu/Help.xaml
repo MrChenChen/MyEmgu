@@ -86,9 +86,9 @@
             </FlowDocumentScrollViewer>
             <Image x:Name="image"
                    Grid.Column="1"
-                   Width="38.204"
-                   Height="37.829"
-                   Margin="165.442,23.908,0,0"
+                   Width="26.853"
+                   Height="28.748"
+                   Margin="204.11,10,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Source="Icon\github.ico">
@@ -97,16 +97,6 @@
                 </Image.Effect>
             </Image>
 
-
-            <TextBlock Grid.Column="1"
-                       Width="303.576"
-                       Height="18.314"
-                       Margin="-74.312,0,0,11.706"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Bottom"
-                       FontSize="14.667">
-                <Hyperlink Click="Hyperlink_Click">https://github.com/MrChenChen/MyEmgu</Hyperlink>
-            </TextBlock>
 
             <FlowDocumentScrollViewer Grid.Row="1"
                                       Grid.ColumnSpan="2"
@@ -132,6 +122,16 @@
                     </List>
                 </FlowDocument>
             </FlowDocumentScrollViewer>
+
+            <TextBlock Grid.Column="1"
+                       Width="303.576"
+                       Height="18.314"
+                       Margin="-74.312,0,0,11.706"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       FontSize="14.667">
+                <Hyperlink Click="Hyperlink_Click">https://github.com/MrChenChen/MyEmgu</Hyperlink>
+            </TextBlock>
 
             <Button Name="buttonOk"
                     Grid.Row="1"
