@@ -65,7 +65,7 @@
                     </Border>
 
                     <!--#region  4 个右上角按钮-->
-                    
+
                     <Border Name="PART_SETTING"
                             Width="34"
                             Height="30"
@@ -593,36 +593,70 @@
                           HorizontalAlignment="Right"
                           Background="{DynamicResource MainColor}" />
 
-            
+
             <!-- 主画布边框 -->
-            <Border Grid.RowSpan="10"
+            <Border Grid.RowSpan="10" Margin="0,-1,0,0"
                     Grid.Column="0"
                     Grid.ColumnSpan="10"
                     BorderBrush="{DynamicResource MainColor}"
                     BorderThickness="1" />
 
-            
-            <!--右键菜单-->
+
+            <!--主图片控件-->
             <Grid Grid.Row="0"
                   Grid.RowSpan="3"
                   Grid.Column="1"
                   Background="Transparent">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="145*" />
-                    <RowDefinition Height="150" />
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Grid.ContextMenu>
-                    <ContextMenu Style="{x:Null}">
-                        <MenuItem Header="装载图像" Style="{x:Null}" />
-                        <MenuItem Header="保存当前图像" Style="{x:Null}" />
-                        <MenuItem Header="保存全部错误图像" Style="{x:Null}" />
-                    </ContextMenu>
-                </Grid.ContextMenu>
 
-                <Image Grid.Row="0"
+                <local:ImageBox x:Name="mainimage" 
                        HorizontalAlignment="Left"
-                       VerticalAlignment="Top" />
+                       VerticalAlignment="Top"
+                       Image="D:\my pictures\Swift-taylor42.jpg" 
+                       />
 
+                <!--  调试信息面板  -->
+                <Grid Grid.Row="1" >
+                    <Border Name="borderDebug"
+                        Margin="-1,0,0,-1"
+                        Background="Transparent"
+                        BorderBrush="{DynamicResource MainColor}"
+                        BorderThickness="1">
+                        <Border.Resources>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="SnapsToDevicePixels" Value="true" />
+                                <Setter Property="OverridesDefaultStyle" Value="true" />
+                                <Setter Property="IsTabStop" Value="False" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                            <Grid Height="20" SnapsToDevicePixels="true">
+                                                <Border x:Name="Border"
+                                                    Background="{TemplateBinding Background}"
+                                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                                    BorderThickness="{TemplateBinding BorderThickness}" />
+                                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsEnabled" Value="false">
+                                                    <Setter Property="Foreground" Value="{DynamicResource DisabledForegroundBrush}" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Border.Resources>
+                        <ListBox Name="listboxDebug"
+                                 Height="100"
+                             ContextMenu="{x:Null}"
+                             Background="Transparent"
+                             FontSize="10" />
+                    </Border>
+                </Grid>
 
             </Grid>
 
@@ -671,44 +705,6 @@
             </Grid>
 
 
-            <!--  调试信息面板  -->
-            <Grid Grid.Row="2" Grid.Column="1">
-                <Border Name="borderDebug"
-                        Margin="-1,1,0,-1"
-                        Background="Transparent"
-                        BorderBrush="{DynamicResource MainColor}"
-                        BorderThickness="1">
-                    <Border.Resources>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="SnapsToDevicePixels" Value="true" />
-                            <Setter Property="OverridesDefaultStyle" Value="true" />
-                            <Setter Property="IsTabStop" Value="False" />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                        <Grid Height="20" SnapsToDevicePixels="true">
-                                            <Border x:Name="Border"
-                                                    Background="{TemplateBinding Background}"
-                                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                                    BorderThickness="{TemplateBinding BorderThickness}" />
-                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                                        </Grid>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsEnabled" Value="false">
-                                                <Setter Property="Foreground" Value="{DynamicResource DisabledForegroundBrush}" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Border.Resources>
-                    <ListBox Name="listboxDebug"
-                             ContextMenu="{x:Null}"
-                             Background="Transparent"
-                             FontSize="10" />
-                </Border>
-            </Grid>
 
 
             <!-- 状态栏 -->
@@ -724,8 +720,17 @@
                            VerticalAlignment="Center"
                            Cursor="Hand"
                            TextTrimming="CharacterEllipsis"
-                           MouseDown="TextWorkPath_MouseDown"
-                           TextBlock.FontSize="14" />
+                           MouseDown="TextWorkPath_MouseDown">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="TextDecorations" Value="Underline"></Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
 
                 <Border Grid.ColumnSpan="2" BorderBrush="{DynamicResource MainColor}" BorderThickness="0,1,1,1"></Border>
 

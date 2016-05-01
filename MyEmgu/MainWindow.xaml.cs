@@ -292,63 +292,6 @@ namespace MyEmgu
 
 
 
-        #region 上方 7 按钮事件
-
-
-        //拍照
-        private void buttonCamera_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        //相机设置
-        private void buttonCameraSetting_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        // 重置 刷新
-        private void buttonRefresh_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        //设置 配置
-        private void buttonSetting_Click(object sender, RoutedEventArgs e)
-        {
-            SettingForm setform = new SettingForm();
-            setform.ShowDialog();
-        }
-
-        //开始检测
-        private void buttonStart_Click(object sender, RoutedEventArgs e)
-        {
-            DisenableUI();
-        }
-
-        //停止检测
-        private void buttonStop_Click(object sender, RoutedEventArgs e)
-        {
-            EnableUI();
-        }
-
-        //教授
-        private void buttonTeach_Click(object sender, RoutedEventArgs e)
-        {
-            MsgForm Msg_Form = new MsgForm("你好呀！！！", this);
-            this.LocationChanged += (obj, e1) => { if (Msg_Form.m_caller == this) Msg_Form.SetStartPosition(); };
-            Msg_Form.Show();
-        }
-
-        //测试
-        private void buttonTest_Click(object sender, RoutedEventArgs e)
-        {
-
-
-        }
-
-        #endregion
-
-
-
         #region 菜单事件
 
         //文件==============================================
@@ -579,7 +522,69 @@ namespace MyEmgu
 
 
 
+
         #endregion
+
+
+
+
+        #region 上方 7 按钮事件
+
+
+        //拍照
+        private void buttonCamera_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        //相机设置
+        private void buttonCameraSetting_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        // 重置 刷新
+        private void buttonRefresh_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        //设置 配置
+        private void buttonSetting_Click(object sender, RoutedEventArgs e)
+        {
+            SettingForm setform = new SettingForm();
+            setform.ShowDialog();
+        }
+
+        //开始检测
+        private void buttonStart_Click(object sender, RoutedEventArgs e)
+        {
+            DisenableUI();
+        }
+
+        //停止检测
+        private void buttonStop_Click(object sender, RoutedEventArgs e)
+        {
+            EnableUI();
+        }
+
+        //教授
+        private void buttonTeach_Click(object sender, RoutedEventArgs e)
+        {
+            MsgForm Msg_Form = new MsgForm("你好呀！！！", this);
+            this.LocationChanged += (obj, e1) => { if (Msg_Form.m_caller == this) Msg_Form.SetStartPosition(); };
+            Msg_Form.Show();
+        }
+
+        //测试
+        private void buttonTest_Click(object sender, RoutedEventArgs e)
+        {
+
+
+        }
+
+        #endregion
+
+
+         
 
 
     }
