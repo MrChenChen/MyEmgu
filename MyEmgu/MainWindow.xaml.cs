@@ -33,15 +33,6 @@ namespace MyEmgu
 
             m_hwnd = new WindowInteropHelper(this).Handle;
 
-            //var rect = new System.Drawing.Rectangle();
-            //var baredge = new AppBarEdge();
-            //var barstatus = new AppBarStates();
-
-            //GetTaskbarPosInfo(ref rect, ref baredge, ref barstatus);
-
-            //MaxWidth = rect.Width + 20;
-            //MaxHeight = rect.Y + 10;
-
             nowtime.Text = DateTime.Now.ToString();
             timer.Interval = new TimeSpan(0, 0, 1);
             timer.Tick += new EventHandler(delegate
@@ -119,7 +110,6 @@ namespace MyEmgu
 
             buttonTest.Content = FindMainFormXmlElement("test");
 
-            buttonRefresh.Content = FindMainFormXmlElement("refresh");
 
             //buttonExit.Content = FindMainFormXmlElement("exit");
 
@@ -234,7 +224,11 @@ namespace MyEmgu
             buttonTest.IsEnabled = false;
             buttonCameraSetting.IsEnabled = false;
             menu.IsEnabled = false;
-            buttonRefresh.IsEnabled = false;
+
+
+            var maincolor = (SolidColorBrush)FindResource("MainColor");
+            maincolor = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
+
         }
 
         private void EnableUI()
@@ -248,13 +242,21 @@ namespace MyEmgu
             buttonTest.IsEnabled = true;
             buttonCameraSetting.IsEnabled = true;
             menu.IsEnabled = true;
-            buttonRefresh.IsEnabled = true;
+
+
+
+
         }
         #endregion
 
 
 
         #region 右上角3个按钮事件
+
+        private void Setting_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
 
         private void Exit_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -301,8 +303,7 @@ namespace MyEmgu
         //相机设置
         private void buttonCameraSetting_Click(object sender, RoutedEventArgs e)
         {
-            var x = GetCurourPosition();
-            MessageBox.Show(x.X.ToString() + " , " + x.Y.ToString());
+
         }
 
         // 重置 刷新
@@ -332,7 +333,8 @@ namespace MyEmgu
         //教授
         private void buttonTeach_Click(object sender, RoutedEventArgs e)
         {
-            MsgForm Msg_Form = new MsgForm("请教教授第一行");
+            MsgForm Msg_Form = new MsgForm("你好呀！！！", this);
+            this.LocationChanged += (obj, e1) => { if (Msg_Form.m_caller == this) Msg_Form.SetStartPosition(); };
             Msg_Form.Show();
         }
 
@@ -394,6 +396,96 @@ namespace MyEmgu
 
         #region WPF 窗体相关 消息循环
 
+        private void WindowResizeGrip_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        {
+            System.Windows.Controls.Primitives.Thumb thumb = (System.Windows.Controls.Primitives.Thumb)sender;
+
+            var hor = e.HorizontalChange;
+            var ver = e.VerticalChange;
+
+            switch (thumb.Name)
+            {
+                case "SizeNWSE_Bottom":
+                    //右下
+                    if (MinHeight < ActualHeight + ver)
+                    {
+                        Height = ActualHeight + ver;
+                    }
+                    if (MinWidth < ActualWidth + hor)
+                    {
+                        Width = ActualWidth + hor;
+                    }
+
+                    break;
+                case "SizeNESW_Top":
+                    //左上
+                    if (MinWidth < ActualWidth - hor)
+                    {
+                        Left += hor;
+                        Width = ActualWidth - hor;
+                    }
+                    if (MinHeight < ActualHeight - ver)
+                    {
+                        Top += ver;
+                        Height = ActualHeight - ver;
+                    }
+                    break;
+                case "SizeNWSE_Top":
+                    //右上
+                    if (MinHeight < ActualHeight - ver)
+                    {
+                        Top += ver;
+                        Height = ActualHeight - ver;
+                        Width = ActualWidth + hor;
+                    }
+                    break;
+                case "SizeNESW_Bottom":
+                    //左下
+                    if (MinWidth < ActualWidth - hor)
+                    {
+                        Left += hor;
+                        Width = ActualWidth - hor;
+                        Height = ActualHeight + ver;
+                    }
+                    break;
+                case "SizeNS_Top":
+                    //上
+                    if (MinHeight < ActualHeight - ver)
+                    {
+                        Top += ver;
+                        Height = ActualHeight - ver;
+                    }
+                    break;
+                case "SizeWE_Right":
+                    //右
+                    if (MinWidth < ActualWidth + hor)
+                    {
+                        Width += hor;
+                    }
+                    break;
+                case "SizeNS_Bottom":
+                    //下
+                    if (MinHeight < ActualHeight + ver)
+                    {
+                        Height = ActualHeight + ver;
+                    }
+                    break;
+                case "SizeWE_Left":
+                    //左
+                    if (MinWidth < ActualWidth - hor)
+                    {
+                        Left += hor;
+                        Width = ActualWidth - hor;
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+
+
+
+        }
 
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -432,34 +524,8 @@ namespace MyEmgu
             }
         }
 
-
         private void Title_MouseMove(object sender, MouseEventArgs e)
         {
-            var temp = Mouse.GetPosition(this);
-
-            var Global = GetCurourPosition();
-
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-
-
-                //if (WindowState == WindowState.Maximized)
-                //{
-                //    Console.WriteLine("Title_MouseMove");
-
-                //    WindowState = WindowState.Normal;
-
-                //    //Left = (Global.X - temp.X / SystemParameters.PrimaryScreenWidth * 1024);
-
-                //    //Top = -Global.Y;
-
-
-                //    Left = last_Rect.X;
-                //    Top = last_Rect.Y;
-
-                //}
-
-            }
 
         }
 
@@ -491,7 +557,7 @@ namespace MyEmgu
 
             if (hwndSource != null)
             {
-                //hwndSource.AddHook(new HwndSourceHook(WndProc));
+                hwndSource.AddHook(new HwndSourceHook(WndProc));
             }
 
 
@@ -502,150 +568,16 @@ namespace MyEmgu
         {
             switch (msg)
             {
-                case WM_NCHITTEST:
-
-
+                case 0x0024:
+                    FullScreenManager.WmGetMinMaxInfo(hwnd, lParam);
+                    handled = true;
                     break;
             }
-
-            return IntPtr.Zero;
-        }
-
-
-        #region Invoke
-
-
-        public const int WM_NCHITTEST = 0x84;
-        public const int WM_SYSCOMMAND = 0x112;
-        public const int HTCAPTION = 2;
-        public const int SC_MOVE = 0xF010;
-
-
-        // 获取鼠标指针的当前位置
-        [DllImport("user32", EntryPoint = "GetCursorPos", SetLastError = false,
-        CharSet = CharSet.Auto, ExactSpelling = false,
-        CallingConvention = CallingConvention.StdCall)]
-        public static extern int GetCursorPos(ref System.Drawing.Point lpPoint);
-
-        // 调用一个窗口的窗口函数，将一条消息发给那个窗口。除非消息处理完毕，否则该函数不会返回。SendMessageBynum， SendMessageByString是该函数的“类型安全”声明形式
-        [DllImport("user32", EntryPoint = "SendMessage", SetLastError = false,
-        CharSet = CharSet.Auto, ExactSpelling = false,
-        CallingConvention = CallingConvention.StdCall)]
-        public static extern int SendMessage(
-            IntPtr hWnd,
-            int wMsg,
-            int wParam,
-            int lParam
-        );
-
-        // 寻找窗口列表中第一个符合指定条件的顶级窗口（在vb里使用：FindWindow最常见的一个用途是获得ThunderRTMain类的隐藏窗口的句柄；该类是所有运行中vb执行程序的一部分。获得句柄后，可用api函数GetWindowText取得这个窗口的名称；该名也是应用程序的标题）
-        [DllImport("user32", EntryPoint = "FindWindow", SetLastError = false,
-        CharSet = CharSet.Auto, ExactSpelling = false,
-        CallingConvention = CallingConvention.StdCall)]
-        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-
-
-        [DllImport("shell32.dll")]
-        public static extern IntPtr SHAppBarMessage(uint dwMessage, ref APPBARDATA pData);
-
-        public enum AppBarMessages
-        {
-            New = 0x00000000,
-            Remove = 0x00000001,
-            QueryPos = 0x00000002,
-            SetPos = 0x00000003,
-            GetState = 0x00000004,
-            GetTaskBarPos = 0x00000005,
-            Activate = 0x00000006,
-            GetAutoHideBar = 0x00000007,
-            SetAutoHideBar = 0x00000008,
-            WindowPosChanged = 0x00000009,
-            SetState = 0x0000000a
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct RECT
-        {
-            public int _Left;
-            public int _Top;
-            public int _Right;
-            public int _Bottom;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct APPBARDATA
-        {
-            public int cbSize;
-            public IntPtr hWnd;
-            public uint uCallbackMessage;
-            public uint uEdge;
-            public RECT rc;
-            public int lParam;
-        }
-
-        public enum AppBarStates
-        {
-            AutoHide = 0x00000001,
-            AlwaysOnTop = 0x00000002
-        }
-
-        public enum AppBarEdge
-        {
-            ABE_LEFT = 0,
-            ABE_TOP = 1,
-            ABE_RIGHT = 2,
-            ABE_BOTTOM = 3
-        }
-
-        /// <summary>
-        /// Retrieve current task bar's position info.
-        /// </summary>
-        /// <param name="taskbarRect">Current task bar's rectangle.</param>
-        /// <param name="eTaskbarEdge">Current task bar's edge.</param>
-        /// <param name="eTaskbarState">Current task bar's state.</param>
-        public void GetTaskbarPosInfo(
-            ref System.Drawing.Rectangle taskbarRect,
-            ref AppBarEdge eTaskbarEdge,
-            ref AppBarStates eTaskbarState)
-        {
-            eTaskbarState = AppBarStates.AlwaysOnTop;  // Init default state
-
-            IntPtr hTaskBarWnd = FindWindow("MSTaskListWClass", "");
-            if (hTaskBarWnd != null)
-            {
-                APPBARDATA abd = new APPBARDATA();
-                abd.cbSize = Marshal.SizeOf(typeof(APPBARDATA));
-                SHAppBarMessage((uint)(AppBarMessages.GetTaskBarPos), ref abd);
-                eTaskbarEdge = (AppBarEdge)(abd.uEdge);
-
-                IntPtr hTmpWnd = SHAppBarMessage((uint)(AppBarMessages.GetAutoHideBar), ref abd);
-                if (0 != hTmpWnd.ToInt64())
-                {
-                    eTaskbarState = AppBarStates.AutoHide;
-                }
-
-                taskbarRect = new System.Drawing.Rectangle(abd.rc._Left, abd.rc._Top, abd.rc._Right, abd.rc._Bottom);
-
-
-            }
-        }
-
-
-        Point GetCurourPosition()
-        {
-            System.Drawing.Point pos = new System.Drawing.Point();
-            GetCursorPos(ref pos);
-            return new System.Windows.Point(pos.X / 1.5, pos.Y / 1.5);
+            return (IntPtr)0;
         }
 
 
 
-
-
-
-
-
-        #endregion
 
         #endregion
 

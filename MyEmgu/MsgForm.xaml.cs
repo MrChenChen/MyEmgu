@@ -11,22 +11,44 @@ namespace MyEmgu
         //关闭窗体是先执行关闭动画，再关闭窗体
         private bool isclose = false;
 
+        public Window m_caller = null;
+
         //初始化
-        public MsgForm()
+        public MsgForm(Window _win)
         {
             InitializeComponent();
-            Left = SystemParameters.PrimaryScreenWidth - 340;
-            Top = SystemParameters.PrimaryScreenHeight - 215;
+
+            m_caller = _win;
+
+            SetStartPosition();
         }
 
-        public MsgForm(string show_msg)
+        public void SetStartPosition()
+        {
+            if (m_caller == null)
+            {
+                Left = SystemParameters.PrimaryScreenWidth - Width - 5;
+                Top = SystemParameters.PrimaryScreenHeight - Height - 40 - 5;
+            }
+            else
+            {
+                Left = m_caller.Left + m_caller.ActualWidth - Width - 5;
+                Top = m_caller.Top + m_caller.ActualHeight - Height - 5;
+            }
+        }
+
+
+        public MsgForm(string show_msg, Window _win)
         {
             InitializeComponent();
-            Left = SystemParameters.PrimaryScreenWidth - 340;
-            Top = SystemParameters.PrimaryScreenHeight - 215;
+
+            m_caller = _win;
+
+            SetStartPosition();
 
             textMessage.Text = show_msg;
         }
+
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
