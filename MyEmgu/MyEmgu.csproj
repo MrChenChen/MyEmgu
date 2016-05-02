@@ -76,6 +76,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="EMUN.cs" />
     <Compile Include="FullScreenManager .cs" />
     <Compile Include="Help.xaml.cs">
       <DependentUpon>Help.xaml</DependentUpon>
@@ -99,7 +100,6 @@
     <Compile Include="SettingForm.xaml.cs">
       <DependentUpon>SettingForm.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SystemConfig.cs" />
     <Compile Include="ThresholdForm.xaml.cs">
       <DependentUpon>ThresholdForm.xaml</DependentUpon>
     </Compile>
@@ -171,8 +171,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icon\2D.bmp" />
-    <Resource Include="Icon\3D.bmp" />
     <Resource Include="Icon\MI.bmp" />
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +194,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icon\ts.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\qqbackimg.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

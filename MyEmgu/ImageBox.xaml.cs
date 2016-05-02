@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Emgu.CV;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -29,6 +30,38 @@ namespace MyEmgu
 
 
 
+        #region Mat相关
+
+
+
+        private Mat _mat = new Mat();
+
+        public Mat Mat
+        {
+            set
+            {
+                _mat = value;
+
+                if (!_mat.IsEmpty)
+                {
+                    Image = BitmapSourceConvert.ToBitmapSource(_mat);
+                }
+            }
+            get
+            {
+                return _mat;
+            }
+
+
+        }
+
+
+
+        #endregion
+
+
+        #region 依赖属性
+
         public ImageSource Image
         {
             get
@@ -43,6 +76,10 @@ namespace MyEmgu
 
         public static readonly DependencyProperty ImageProperty = DependencyProperty.Register("Image", typeof(ImageSource), typeof(ImageBox), new PropertyMetadata(null));
 
+        #endregion
+
+
+
         #region 菜单事件
 
         private void LoadImage_Click(object sender, RoutedEventArgs e)
@@ -56,13 +93,9 @@ namespace MyEmgu
 
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                Image = ImageProcess.LoadImage(dialog.FileName, Emgu.CV.CvEnum.LoadImageType.Unchanged);
+                Mat = new Mat(dialog.FileName, Emgu.CV.CvEnum.LoadImageType.Unchanged);
             }
         }
-
-
-
-        #endregion
 
 
         private void Grid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -73,5 +106,66 @@ namespace MyEmgu
 
             menu.IsOpen = true;
         }
+
+
+
+        #endregion
+
+
+        #region 绘制相关
+
+        public bool StartDraw_Flag = false;
+
+        bool MouseDown_Flag = false;
+
+        Point MouseDown_Point = new Point();
+
+        private void mainimg_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (StartDraw_Flag)
+            {
+                MouseDown_Flag = true;
+
+                MouseDown_Point = e.GetPosition(mainimg);
+
+                mainrect.Margin = new Thickness(MouseDown_Point.X, MouseDown_Point.Y, 0, 0);
+
+                mainrect.Width = 0;
+                mainrect.Height = 0;
+
+            }
+        }
+
+
+        private void mainimg_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed && StartDraw_Flag && MouseDown_Flag)
+            {
+                var pos = e.GetPosition(mainimg);
+
+                mainrect.Width = Math.Abs(pos.X - MouseDown_Point.X);
+
+                mainrect.Height = Math.Abs(pos.Y - MouseDown_Point.Y);
+
+
+
+
+            }
+
+        }
+
+        private void mainimg_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (StartDraw_Flag)
+            {
+                MouseDown_Flag = false;
+            }
+
+        }
+
+
+        #endregion
+
+
     }
 }

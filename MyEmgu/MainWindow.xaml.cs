@@ -20,12 +20,14 @@ namespace MyEmgu
     public partial class MainWindow : Window
     {
         public IntPtr m_hwnd = IntPtr.Zero;
-        private XDocument mainformxmlfile;
         private ObservableCollection<string> myDebugQueue = new ObservableCollection<string>();
         private DetailList myDetailList = DetailList.GetOnlyInstance();
         private DispatcherTimer timer = new DispatcherTimer();
 
         private Rect last_Rect = new Rect();
+
+        //系统状态
+        SystemStatus m_sys = SystemStatus.enumNormal;
 
         public MainWindow()
         {
@@ -48,7 +50,6 @@ namespace MyEmgu
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            SystemConfig.st = SysStation.MI;
 
             myDetailList.Init();
 
@@ -56,7 +57,7 @@ namespace MyEmgu
             listboxDebug.ItemsSource = myDebugQueue;
 
             //LoadMainFormLanguage();
-
+            
 
         }
 
@@ -82,108 +83,6 @@ namespace MyEmgu
             }
         }
 
-
-
-        /// <summary>
-        /// 加载主窗体语言设置
-        /// </summary>
-        private void LoadMainFormLanguage()
-        {
-            if (!System.IO.File.Exists("MainFormConfig.xml"))
-            {
-                return;
-            }
-
-            mainformxmlfile = XDocument.Load("MainFormConfig.xml");
-
-            //主窗体按钮
-
-            buttonCamera.Content = FindMainFormXmlElement("camera");
-
-            buttonCameraSetting.Content = FindMainFormXmlElement("camerasetting");
-
-            buttonTeach.Content = FindMainFormXmlElement("teach");
-
-            buttonStart.Content = FindMainFormXmlElement("start");
-
-            buttonStop.Content = FindMainFormXmlElement("stop");
-
-            buttonTest.Content = FindMainFormXmlElement("test");
-
-
-            //buttonExit.Content = FindMainFormXmlElement("exit");
-
-            //MoudleName.DetailName = FindMainFormXmlElement("modulename");
-
-            var x0 = (from c in myDetailList where c.DetailName == "modulename" select c);
-            if (x0.Count() == 1)
-            {
-                x0.First().DetailContent = FindMainFormXmlElement("modulename");
-            }
-
-            var x1 = (from c in myDetailList where c.DetailName == "looptime" select c);
-            if (x1.Count() == 1)
-            {
-                x1.First().DetailContent = FindMainFormXmlElement("looptime");
-            }
-
-            var x2 = (from c in myDetailList where c.DetailName == "speed" select c);
-            if (x2.Count() == 1)
-            {
-                x2.FirstOrDefault().DetailContent = FindMainFormXmlElement("speed");
-            }
-
-            var x3 = (from c in myDetailList where c.DetailName == "good" select c);
-            if (x3.Count() == 1)
-            {
-                x3.First().DetailContent = FindMainFormXmlElement("good");
-            }
-
-            var x4 = (from c in myDetailList where c.DetailName == "bad" select c);
-            if (x4.Count() == 1)
-            {
-                x4.First().DetailContent = FindMainFormXmlElement("bad");
-            }
-
-            var x5 = (from c in myDetailList where c.DetailName == "percent" select c);
-            if (x5.Count() == 1)
-            {
-                x5.First().DetailContent = FindMainFormXmlElement("percent");
-            }
-
-            //LoopTime.DetailName = FindMainFormXmlElement("looptime");
-            //Speed.DetailName = FindMainFormXmlElement("speed");
-            //Good.DetailName = FindMainFormXmlElement("good");
-            //Bad.DetailName = FindMainFormXmlElement("bad");
-            //Percent.DetailName = FindMainFormXmlElement("percent");
-
-            //菜单
-
-            menuFile.Header = FindMainFormXmlElement("fileheader");
-            menuConfig.Header = FindMainFormXmlElement("configheader");
-
-            menuSecurity.Header = FindMainFormXmlElement("securityheader");
-            menuTools.Header = FindMainFormXmlElement("toolsheader");
-
-            menuReport.Header = FindMainFormXmlElement("reportheader");
-            menuHelp.Header = FindMainFormXmlElement("helpheader");
-        }
-
-
-
-        /// <summary>
-        /// 查找 Config.xml文件中的元素信息
-        /// </summary>
-        private string FindMainFormXmlElement(string elementname)
-        {
-            var x = from n in mainformxmlfile.Descendants(elementname)
-                    select n.Value;
-            foreach (var item in x)
-            {
-                return item;
-            }
-            return string.Empty;
-        }
 
         #endregion
 
@@ -213,40 +112,7 @@ namespace MyEmgu
 
         #region UI刷新
 
-        private void DisenableUI()
-        {
-            buttonStop.IsEnabled = true;
 
-            buttonStart.IsEnabled = false;
-            buttonCamera.IsEnabled = false;
-            buttonSetting.IsEnabled = false;
-            buttonTeach.IsEnabled = false;
-            buttonTest.IsEnabled = false;
-            buttonCameraSetting.IsEnabled = false;
-            menu.IsEnabled = false;
-
-
-            var maincolor = (SolidColorBrush)FindResource("MainColor");
-            maincolor = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
-
-        }
-
-        private void EnableUI()
-        {
-            buttonStop.IsEnabled = false;
-
-            buttonStart.IsEnabled = true;
-            buttonCamera.IsEnabled = true;
-            buttonSetting.IsEnabled = true;
-            buttonTeach.IsEnabled = true;
-            buttonTest.IsEnabled = true;
-            buttonCameraSetting.IsEnabled = true;
-            menu.IsEnabled = true;
-
-
-
-
-        }
         #endregion
 
 
@@ -534,13 +400,9 @@ namespace MyEmgu
         //拍照
         private void buttonCamera_Click(object sender, RoutedEventArgs e)
         {
-        }
-
-        //相机设置
-        private void buttonCameraSetting_Click(object sender, RoutedEventArgs e)
-        {
 
         }
+
 
         // 重置 刷新
         private void buttonRefresh_Click(object sender, RoutedEventArgs e)
@@ -557,34 +419,49 @@ namespace MyEmgu
         //开始检测
         private void buttonStart_Click(object sender, RoutedEventArgs e)
         {
-            DisenableUI();
+
         }
 
         //停止检测
         private void buttonStop_Click(object sender, RoutedEventArgs e)
         {
-            EnableUI();
+
         }
 
         //教授
-        private void buttonTeach_Click(object sender, RoutedEventArgs e)
+        private void buttonSetROI_Click(object sender, RoutedEventArgs e)
         {
-            MsgForm Msg_Form = new MsgForm("你好呀！！！", this);
-            this.LocationChanged += (obj, e1) => { if (Msg_Form.m_caller == this) Msg_Form.SetStartPosition(); };
-            Msg_Form.Show();
+            MsgForm msg_Form = new MsgForm("请在图片上绘制 ROI", this);
+
+            msg_Form.buttonOk.Content = "完成";
+
+            mainimage.StartDraw_Flag = true;
+
+            msg_Form.buttonOk.Click += (obj, e1) =>
+            {
+
+
+
+            };
+
+
+            msg_Form.buttonCancle.Content = "重绘";
+
+
+            msg_Form.ShowDialog();
         }
 
         //测试
         private void buttonTest_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show(mainimage.Mat.IsEmpty.ToString());
 
         }
 
         #endregion
 
 
-         
+
 
 
     }

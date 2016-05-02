@@ -7,20 +7,21 @@
         Title="MainWindow"
         Width="1024"
         Height="768"
+        MinWidth="729"
+        MinHeight="550"
         AllowsTransparency="True"
         Icon="Icon\github.ico"
         Loaded="Window_Loaded"
         SnapsToDevicePixels="True"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
-        MinWidth="729"
-        MinHeight="550"
-        >
+        WindowStyle="None">
 
 
     <Window.Template>
         <ControlTemplate TargetType="{x:Type Window}">
-            <Border Margin="20" Background="Transparent" x:Name="MainBorder">
+            <Border x:Name="MainBorder"
+                    Margin="20"
+                    Background="Transparent">
                 <Border.Effect>
                     <DropShadowEffect x:Name="MainBorderEffect"
                                       BlurRadius="15"
@@ -32,12 +33,16 @@
                         <RowDefinition Height="30" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <!--  标题栏 区域  -->
-                    <Border Name="PART_TITLEBAR"
-                            Background="{DynamicResource MainColor}"
-                            MouseLeftButtonDown="TitleBar_MouseLeftButtonDown"
-                            MouseMove="Title_MouseMove">
 
+                    <Image Margin="0,0,0,-120"
+                           Opacity="0.8"
+                           Source="Icon\qqBackimg.png"
+                           Stretch="UniformToFill" >
+                    </Image>
+
+
+                    <!--  标题栏 区域  -->
+                    <Border Name="PART_TITLEBAR">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0" />
@@ -45,6 +50,17 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition Width="140" />
                             </Grid.ColumnDefinitions>
+
+                            <Border Grid.ColumnSpan="3"
+                                    Background="Transparent"
+                                    MouseLeftButtonDown="TitleBar_MouseLeftButtonDown"
+                                    MouseMove="Title_MouseMove" />
+
+                            <Border Grid.ColumnSpan="4"
+                                    Margin="0,30,0,-119"
+                                    Background="Transparent"
+                                    MouseLeftButtonDown="TitleBar_MouseLeftButtonDown"
+                                    MouseMove="Title_MouseMove" />
 
                             <Image Grid.Column="1"
                                    Margin="4"
@@ -59,10 +75,12 @@
                                        Foreground="{DynamicResource TextColor}"
                                        Text="{Binding ElementName=mainwin,
                                                       Path=Title}" />
-
                         </Grid>
 
                     </Border>
+
+
+
 
                     <!--#region  4 个右上角按钮-->
 
@@ -79,8 +97,9 @@
                                     Background="White"
                                     Opacity="0" />
                             <Grid Margin="12,10,12,10">
-                                <Path Stroke="White"
-                                      StrokeThickness="1" SnapsToDevicePixels="True">
+                                <Path SnapsToDevicePixels="True"
+                                      Stroke="White"
+                                      StrokeThickness="1">
                                     <Path.Data>
                                         <GeometryGroup>
                                             <LineGeometry StartPoint="0,1.5" EndPoint="10,1.5" />
@@ -128,8 +147,7 @@
                                     Background="White"
                                     Opacity="0" />
                             <Grid Margin="12,10,12,10">
-                                <Path Stroke="White"
-                                      StrokeThickness="2">
+                                <Path Stroke="White" StrokeThickness="2">
                                     <Path.Data>
                                         <LineGeometry StartPoint="0,10" EndPoint="10,10" />
                                     </Path.Data>
@@ -172,30 +190,32 @@
                             <Border Name="MaxBackBorder"
                                     Background="White"
                                     Opacity="0" />
-                            <Grid x:Name="NormalStyle" Margin="12,10,12,10" Visibility="Visible">
-                                <Path Stroke="White"
-                                      StrokeThickness="2" >
+                            <Grid x:Name="NormalStyle"
+                                  Margin="12,10,12,10"
+                                  Visibility="Visible">
+                                <Path Stroke="White" StrokeThickness="2">
                                     <Path.Data>
                                         <GeometryGroup>
-                                            <LineGeometry StartPoint="0,1" EndPoint="10,1"></LineGeometry>
-                                            <RectangleGeometry Rect="0,0,10,10"  />
+                                            <LineGeometry StartPoint="0,1" EndPoint="10,1" />
+                                            <RectangleGeometry Rect="0,0,10,10" />
                                         </GeometryGroup>
                                     </Path.Data>
                                 </Path>
 
                             </Grid>
-                            <Grid x:Name="MaxStyle" Margin="10,9,10,10" Visibility="Collapsed">
-                                <Path 
-                                      Stroke="White">
+                            <Grid x:Name="MaxStyle"
+                                  Margin="10,9,10,10"
+                                  Visibility="Collapsed">
+                                <Path Stroke="White">
                                     <Path.Data>
                                         <GeometryGroup>
-                                            <LineGeometry StartPoint="0.5,3.5" EndPoint="9.5,3.5"></LineGeometry>
-                                            <LineGeometry StartPoint="3.5,0.5" EndPoint="12.5,0.5"></LineGeometry>
-                                            <LineGeometry StartPoint="3.5,1" EndPoint="11.5,1"></LineGeometry>
-                                            <LineGeometry StartPoint="3.5,1.5" EndPoint="11.5,1.5"></LineGeometry>
-                                            <LineGeometry StartPoint="4,1" EndPoint="4,3"></LineGeometry>
-                                            <LineGeometry StartPoint="12,0.5" EndPoint="12,7"></LineGeometry>
-                                            <LineGeometry StartPoint="9,7" EndPoint="12.5,7"></LineGeometry>
+                                            <LineGeometry StartPoint="0.5,3.5" EndPoint="9.5,3.5" />
+                                            <LineGeometry StartPoint="3.5,0.5" EndPoint="12.5,0.5" />
+                                            <LineGeometry StartPoint="3.5,1" EndPoint="11.5,1" />
+                                            <LineGeometry StartPoint="3.5,1.5" EndPoint="11.5,1.5" />
+                                            <LineGeometry StartPoint="4,1" EndPoint="4,3" />
+                                            <LineGeometry StartPoint="12,0.5" EndPoint="12,7" />
+                                            <LineGeometry StartPoint="9,7" EndPoint="12.5,7" />
                                             <RectangleGeometry Rect="1,4.5,8,6" />
                                         </GeometryGroup>
                                     </Path.Data>
@@ -239,8 +259,7 @@
                                     Background="Red"
                                     Opacity="0" />
                             <Grid Margin="12,10,12,10">
-                                <Path Stroke="White"
-                                      StrokeThickness="1">
+                                <Path Stroke="White" StrokeThickness="1">
                                     <Path.Data>
                                         <GeometryGroup>
                                             <LineGeometry StartPoint="0,0" EndPoint="10,10" />
@@ -274,60 +293,107 @@
                         </Border.Triggers>
                     </Border>
 
+
+                    <!--  改变窗体大小把手  -->
+                    <Grid Grid.RowSpan="2"
+                          Grid.ColumnSpan="2"
+                          Margin="-5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="10" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                        </Grid.ColumnDefinitions>
+
+
+                        <!--  上  -->
+                        <Thumb x:Name="SizeNS_Top"
+                               Grid.Column="1"
+                               Cursor="SizeNS"
+                               DragDelta="WindowResizeGrip_DragDelta"
+                               IsTabStop="false"
+                               Opacity="0" />
+                        <!--  右上  -->
+                        <Thumb x:Name="SizeNWSE_Top"
+                               Grid.Column="2"
+                               Cursor="SizeNESW"
+                               DragDelta="WindowResizeGrip_DragDelta"
+                               IsTabStop="false"
+                               Opacity="0" />
+
+                        <!--  左上  -->
+                        <Thumb x:Name="SizeNESW_Top"
+                               Grid.Row="0"
+                               Cursor="SizeNWSE"
+                               DragDelta="WindowResizeGrip_DragDelta"
+                               IsTabStop="false"
+                               Opacity="0" />
+                        <!--  左  -->
+                        <Thumb x:Name="SizeWE_Left"
+                               Grid.Row="1"
+                               Cursor="SizeWE"
+                               DragDelta="WindowResizeGrip_DragDelta"
+                               IsTabStop="false"
+                               Opacity="0" />
+                        <!--  右  -->
+                        <Thumb x:Name="SizeWE_Right"
+                               Grid.Row="1"
+                               Grid.Column="2"
+                               Cursor="SizeWE"
+                               DragDelta="WindowResizeGrip_DragDelta"
+                               IsTabStop="false"
+                               Opacity="0" />
+                        <!--  左下  -->
+                        <Thumb x:Name="SizeNESW_Bottom"
+                               Grid.Row="2"
+                               Cursor="SizeNESW"
+                               DragDelta="WindowResizeGrip_DragDelta"
+                               IsTabStop="false"
+                               Opacity="0" />
+                        <!--  下  -->
+                        <Thumb x:Name="SizeNS_Bottom"
+                               Grid.Row="2"
+                               Grid.Column="1"
+                               Cursor="SizeNS"
+                               DragDelta="WindowResizeGrip_DragDelta"
+                               IsTabStop="false"
+                               Opacity="0" />
+                        <!--  右下  -->
+                        <Thumb x:Name="SizeNWSE_Bottom"
+                               Grid.Row="2"
+                               Grid.Column="2"
+                               Cursor="SizeNWSE"
+                               DragDelta="WindowResizeGrip_DragDelta"
+                               IsTabStop="false"
+                               Opacity="0" />
+
+                    </Grid>
+
+
                     <!--  主界面区域  -->
                     <ContentPresenter Grid.Row="1"
                                       Margin="{TemplateBinding Padding}"
                                       Content="{TemplateBinding Content}" />
 
-
-                    <Grid Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="-5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="10"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="10"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="10"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="10"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-
-                        <!--左上-->
-                        <Thumb x:Name="SizeNESW_Top" Cursor="SizeNWSE" Grid.Row="0"   Opacity="0"  IsTabStop="false"  DragDelta="WindowResizeGrip_DragDelta" />
-                        <!--右上-->
-                        <Thumb x:Name="SizeNWSE_Top" Cursor="SizeNESW" Grid.Column="2"  Opacity="0"   IsTabStop="false" DragDelta="WindowResizeGrip_DragDelta" />
-                        <!--右下-->
-                        <Thumb x:Name="SizeNWSE_Bottom" Cursor="SizeNWSE" Grid.Row="2" Grid.Column="2"  Opacity="0"   IsTabStop="false"  DragDelta="WindowResizeGrip_DragDelta" />
-                        <!--左下-->
-                        <Thumb x:Name="SizeNESW_Bottom" Cursor="SizeNESW" Grid.Row="2"  Opacity="0"   IsTabStop="false"   DragDelta="WindowResizeGrip_DragDelta" />
-
-
-                        <!--上-->
-                        <Thumb x:Name="SizeNS_Top" Cursor="SizeNS" Grid.Column="1" Opacity="0"  IsTabStop="false" DragDelta="WindowResizeGrip_DragDelta" ></Thumb>
-                        <!--右-->
-                        <Thumb x:Name="SizeWE_Right" Cursor="SizeWE" Grid.Column="2" Grid.Row="1" Opacity="0"  IsTabStop="false" DragDelta="WindowResizeGrip_DragDelta" ></Thumb>
-                        <!--下-->
-                        <Thumb x:Name="SizeNS_Bottom" Cursor="SizeNS" Grid.Column="1" Grid.Row="2" Opacity="0"  IsTabStop="false" DragDelta="WindowResizeGrip_DragDelta" ></Thumb>
-                        <!--左-->
-                        <Thumb x:Name="SizeWE_Left" Cursor="SizeWE" Grid.Row="1" Opacity="0"  IsTabStop="false" DragDelta="WindowResizeGrip_DragDelta" ></Thumb>
-
-                    </Grid>
-
                 </Grid>
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="WindowState" Value="Maximized">
-                    <Setter TargetName="SizeNESW_Top" Property="Visibility" Value="Collapsed"></Setter>
-                    <Setter TargetName="SizeNWSE_Top" Property="Visibility" Value="Collapsed"></Setter>
-                    <Setter TargetName="SizeNWSE_Bottom" Property="Visibility" Value="Collapsed"></Setter>
-                    <Setter TargetName="SizeNESW_Bottom" Property="Visibility" Value="Collapsed"></Setter>
-                    <Setter TargetName="SizeNS_Top" Property="Visibility" Value="Collapsed"></Setter>
-                    <Setter TargetName="SizeWE_Right" Property="Visibility" Value="Collapsed"></Setter>
-                    <Setter TargetName="SizeNS_Bottom" Property="Visibility" Value="Collapsed"></Setter>
-                    <Setter TargetName="SizeWE_Left" Property="Visibility" Value="Collapsed"></Setter>
-                    <Setter TargetName="MainBorder" Property="Margin" Value="0,0,0,0"></Setter>
-                    <Setter TargetName="MaxStyle" Property="Visibility" Value="Visible"></Setter>
-                    <Setter TargetName="NormalStyle" Property="Visibility" Value="Collapsed"></Setter>
+                    <Setter TargetName="SizeNESW_Top" Property="Visibility" Value="Collapsed" />
+                    <Setter TargetName="SizeNWSE_Top" Property="Visibility" Value="Collapsed" />
+                    <Setter TargetName="SizeNWSE_Bottom" Property="Visibility" Value="Collapsed" />
+                    <Setter TargetName="SizeNESW_Bottom" Property="Visibility" Value="Collapsed" />
+                    <Setter TargetName="SizeNS_Top" Property="Visibility" Value="Collapsed" />
+                    <Setter TargetName="SizeWE_Right" Property="Visibility" Value="Collapsed" />
+                    <Setter TargetName="SizeNS_Bottom" Property="Visibility" Value="Collapsed" />
+                    <Setter TargetName="SizeWE_Left" Property="Visibility" Value="Collapsed" />
+                    <Setter TargetName="MainBorder" Property="Margin" Value="0,0,0,0" />
+                    <Setter TargetName="MaxStyle" Property="Visibility" Value="Visible" />
+                    <Setter TargetName="NormalStyle" Property="Visibility" Value="Collapsed" />
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -335,7 +401,7 @@
 
     <!--  主布局  -->
 
-    <Grid >
+    <Grid>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="119" />
@@ -351,8 +417,8 @@
 
             <Border Grid.Row="0">
                 <Menu x:Name="menu"
-                      Margin="0,0"
-                      Background="{DynamicResource MainColor}"
+                      HorizontalAlignment="Left"
+                      Background="Transparent"
                       TextBlock.FontSize="15"
                       TextBlock.FontWeight="Normal">
 
@@ -372,22 +438,17 @@
                     <MenuItem Name="menuConfig"
                               Height="29"
                               Margin="0"
-                              Background="{DynamicResource MainColor}"
                               Header="配置">
                         <MenuItem Header="测试   0" />
                     </MenuItem>
 
-                    <MenuItem Name="menuSecurity"
-                              Background="{DynamicResource MainColor}"
-                              Header="安全">
+                    <!--<MenuItem Name="menuSecurity" Header="安全">
                         <MenuItem Click="HigherLevel_Click"
                                   Header="提高安全等级"
                                   TextBlock.FontWeight="Normal" />
-                    </MenuItem>
+                    </MenuItem>-->
 
-                    <MenuItem Name="menuTools"
-                              Background="{DynamicResource MainColor}"
-                              Header="工具">
+                    <MenuItem Name="menuTools" Header="工具">
                         <MenuItem Click="menuShowDebugInfo_Click"
                                   Header="显示调试信息"
                                   IsChecked="True" />
@@ -396,13 +457,9 @@
 
                     <MenuItem Name="menuReport"
                               Height="29"
-                              Margin="0"
-                              Background="{DynamicResource MainColor}"
                               Header="报告" />
 
-                    <MenuItem Name="menuHelp"
-                              Background="{DynamicResource MainColor}"
-                              Header="帮助">
+                    <MenuItem Name="menuHelp" Header="帮助">
                         <MenuItem Click="menuHelp_Click" Header="关于本程序" />
 
                         <MenuItem Header="测试   1" TextBlock.FontWeight="Normal">
@@ -429,20 +486,11 @@
 
             <!--#endregion-->
 
-            <Border Grid.Row="1" Background="{DynamicResource MainColor}">
+            <Border Grid.Row="1">
 
                 <!--#region  7个大按钮-->
-                <Grid Margin="0,0,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
+
 
                     <local:ImageButton x:Name="buttonCamera"
                                        Click="buttonCamera_Click"
@@ -451,29 +499,29 @@
                                        IsTabStop="False"
                                        Text="摄像" />
 
-                    <local:ImageButton x:Name="buttonCameraSetting"
+                    <!--<local:ImageButton x:Name="buttonCameraSetting"
                                        Grid.Column="1"
                                        Click="buttonCameraSetting_Click"
                                        Image="Icon/camerasetting.png"
                                        IsTabStop="False"
-                                       Text="相机设置" />
+                                       Text="相机设置" />-->
 
                     <local:ImageButton x:Name="buttonTeach"
-                                       Grid.Column="2"
-                                       Click="buttonTeach_Click"
+                                       Grid.Column="1"
+                                       Click="buttonSetROI_Click"
                                        Image="Icon\teach.png"
                                        IsTabStop="False"
-                                       Text="教授" />
+                                       Text="ROI" />
 
                     <local:ImageButton x:Name="buttonStart"
-                                       Grid.Column="3"
+                                       Grid.Column="2"
                                        Click="buttonStart_Click"
                                        Image="Icon\start.png"
                                        IsTabStop="False"
                                        Text="开始" />
 
                     <local:ImageButton x:Name="buttonStop"
-                                       Grid.Column="4"
+                                       Grid.Column="3"
                                        Click="buttonStop_Click"
                                        Image="Icon/stop.png"
                                        IsEnabled="False"
@@ -494,63 +542,16 @@
                                        IsTabStop="False"
                                        Text="配置" />
 
-                    <!--<Button Name="buttonSetting"
-                            >
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Grid>
-                                    <Border Name="BtnBG"
-                                            Background="White"
-                                            Opacity="0" />
-                                    <Border Margin="8,2,8,24">
-                                        <Image Source="Icon/setting.png" />
-                                    </Border>
-                                    <TextBlock Margin="5,5,5,8"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Bottom"
-                                               FontSize="16"
-                                               Foreground="{DynamicResource TextColor}"
-                                               Text="配置" />
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="true">
-                                        <Trigger.EnterActions>
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation Duration="0:0:0.3"
-                                                                     Storyboard.TargetName="BtnBG"
-                                                                     Storyboard.TargetProperty="Opacity"
-                                                                     To="0.3" />
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </Trigger.EnterActions>
-                                        <Trigger.ExitActions>
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation Duration="0:0:0.3"
-                                                                     Storyboard.TargetName="BtnBG"
-                                                                     Storyboard.TargetProperty="Opacity"
-                                                                     To="0" />
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </Trigger.ExitActions>
-                                    </Trigger>
-                                    <Trigger Property="IsEnabled" Value="false">
-                                        <Setter Property="Opacity" Value="0.4" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>-->
-
-                </Grid>
+                </StackPanel>
                 <!--#endregion-->
             </Border>
 
         </Grid>
 
         <!--  主窗体布局  -->
-        <Grid Grid.Row="2" Grid.RowSpan="2" Background="{DynamicResource MainGridColor}" >
+        <Grid Grid.Row="2"
+              Grid.RowSpan="2"
+              Background="{DynamicResource MainGridColor}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="100" />
@@ -587,44 +588,44 @@
                 </TextBlock>
             </Border>
 
-            <!--拖动栏-->
+            <!--  拖动栏  -->
             <GridSplitter Grid.RowSpan="5"
                           Width="3"
                           HorizontalAlignment="Right"
                           Background="{DynamicResource MainColor}" />
 
 
-            <!-- 主画布边框 -->
-            <Border Grid.RowSpan="10" Margin="0,-1,0,0"
+            <!--  主画布边框  -->
+            <Border Grid.RowSpan="10"
                     Grid.Column="0"
                     Grid.ColumnSpan="10"
+                    Margin="0,0,0,0"
                     BorderBrush="{DynamicResource MainColor}"
-                    BorderThickness="1" />
+                    BorderThickness="1,0,1,1" />
 
 
-            <!--主图片控件-->
+            <!--  主图片控件  -->
             <Grid Grid.Row="0"
                   Grid.RowSpan="3"
                   Grid.Column="1"
                   Background="Transparent">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
 
-                <local:ImageBox x:Name="mainimage" 
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
-                       Image="D:\my pictures\Swift-taylor42.jpg" 
-                       />
+                <local:ImageBox x:Name="mainimage"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Image="D:\my pictures\Swift-taylor42.jpg" />
 
                 <!--  调试信息面板  -->
-                <Grid Grid.Row="1" >
+                <Grid Grid.Row="1">
                     <Border Name="borderDebug"
-                        Margin="-1,0,0,-1"
-                        Background="Transparent"
-                        BorderBrush="{DynamicResource MainColor}"
-                        BorderThickness="1">
+                            Margin="-1,0,0,-1"
+                            Background="Transparent"
+                            BorderBrush="{DynamicResource MainColor}"
+                            BorderThickness="1">
                         <Border.Resources>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="SnapsToDevicePixels" Value="true" />
@@ -635,9 +636,9 @@
                                         <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                             <Grid Height="20" SnapsToDevicePixels="true">
                                                 <Border x:Name="Border"
-                                                    Background="{TemplateBinding Background}"
-                                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                                    BorderThickness="{TemplateBinding BorderThickness}" />
+                                                        Background="{TemplateBinding Background}"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        BorderThickness="{TemplateBinding BorderThickness}" />
                                                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                                             </Grid>
                                             <ControlTemplate.Triggers>
@@ -652,9 +653,9 @@
                         </Border.Resources>
                         <ListBox Name="listboxDebug"
                                  Height="100"
-                             ContextMenu="{x:Null}"
-                             Background="Transparent"
-                             FontSize="10" />
+                                 Background="Transparent"
+                                 ContextMenu="{x:Null}"
+                                 FontSize="10" />
                     </Border>
                 </Grid>
 
@@ -669,49 +670,26 @@
                 </Grid.RowDefinitions>
                 <TextBlock Margin="10,0,10,0"
                            VerticalAlignment="Center"
-                           FontSize="15"
+                           FontSize="17"
                            FontWeight="Bold"
-                           Text="检测信息" />
+                           Text="Information" FontFamily="Sitka Text" />
                 <ListBox x:Name="listBoxDetail"
-                         Background="Transparent"
                          Grid.Row="1"
                          Margin="10,5"
-                         Style="{DynamicResource SimpleListBox}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Height="25" Margin="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="{Binding ElementName=listBoxDetail, Path=ActualWidth, Converter={StaticResource ListBoxLeftWidthConverter}}" />
-                                    <ColumnDefinition Width="{Binding ElementName=listBoxDetail, Path=ActualWidth, Converter={StaticResource ListBoxRightWidthConverter}}" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Margin="5,0,0,0"
-                                           VerticalAlignment="Center"
-                                           Text="{Binding DetailContent}" />
-                                <Border BorderBrush="{DynamicResource MainColor}" BorderThickness="0,0,1,1" />
-                                <TextBlock Grid.Column="1"
-                                           Margin="0,0,5,2"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Right"
-                                           Foreground="{Binding ContentBrush}"
-                                           Text="{Binding DetailData}" />
-                                <Border Grid.Column="1"
-                                        Margin="0,0,-2000,0"
-                                        BorderBrush="{DynamicResource MainColor}"
-                                        BorderThickness="0,0,0,1" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
+                         Background="Transparent"
+                         Style="{DynamicResource SimpleListBox}" ItemTemplate="{StaticResource InfoListTemplate}">
+
                 </ListBox>
             </Grid>
 
 
 
 
-            <!-- 状态栏 -->
-            <Grid Grid.Column="1" Grid.Row="3">
+            <!--  状态栏  -->
+            <Grid Grid.Row="3" Grid.Column="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" ></ColumnDefinition>
-                    <ColumnDefinition  Width="auto" ></ColumnDefinition>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Name="textWorkpath"
@@ -719,31 +697,33 @@
                            HorizontalAlignment="Left"
                            VerticalAlignment="Center"
                            Cursor="Hand"
-                           TextTrimming="CharacterEllipsis"
-                           MouseDown="TextWorkPath_MouseDown">
+                           MouseDown="TextWorkPath_MouseDown"
+                           TextTrimming="CharacterEllipsis">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="TextDecorations" Value="Underline"></Setter>
+                                    <Setter Property="TextDecorations" Value="Underline" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
 
-                <Border Grid.ColumnSpan="2" BorderBrush="{DynamicResource MainColor}" BorderThickness="0,1,1,1"></Border>
+                <Border Grid.ColumnSpan="2"
+                        BorderBrush="{DynamicResource MainColor}"
+                        BorderThickness="0,1,1,1" />
 
-                <Border Grid.Column="1"                    
-                    BorderBrush="{DynamicResource MainColor}"
-                    BorderThickness="1,0,0,0">
-                    <TextBlock x:Name="nowtime"                                                                              
-                           Margin="6,5,5,6"
-                           HorizontalAlignment="Right"
-                           VerticalAlignment="Center"
-                           FontSize="15"
-                           FontWeight="Bold"                           
-                           TextAlignment="Center" />
+                <Border Grid.Column="1"
+                        BorderBrush="{DynamicResource MainColor}"
+                        BorderThickness="1,0,0,0">
+                    <TextBlock x:Name="nowtime"
+                               Margin="6,5,5,6"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center"
+                               FontSize="15"
+                               FontWeight="Bold"
+                               TextAlignment="Center" />
                 </Border>
 
 

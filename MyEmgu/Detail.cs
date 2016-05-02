@@ -11,7 +11,6 @@ namespace MyEmgu
         private SolidColorBrush _ContentBrush = new SolidColorBrush(Colors.Black);
         private string _DetailContent;
         private string _DetailData;
-        private string _DetailName;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -48,15 +47,6 @@ namespace MyEmgu
             }
         }
 
-        public string DetailName
-        {
-            get { return _DetailName; }
-            set
-            {
-                _DetailName = value;
-                OnPropertyChanged("DetailName");
-            }
-        }
 
         protected internal virtual void OnPropertyChanged(string propertyName)
         {

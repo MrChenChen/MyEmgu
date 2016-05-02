@@ -10,7 +10,7 @@
              mc:Ignorable="d">
     <UserControl.Resources>
 
-        <ContextMenu x:Key="ImageBoxContextMenu" Style="{x:Null}" >
+        <ContextMenu x:Key="ImageBoxContextMenu" Style="{x:Null}">
             <MenuItem Click="LoadImage_Click"
                       Header="装载图像"
                       Style="{x:Null}" />
@@ -22,7 +22,19 @@
         <Image Name="mainimg"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
+               MouseLeftButtonDown="mainimg_MouseLeftButtonDown"
+               MouseLeftButtonUp="mainimg_MouseLeftButtonUp"
+               MouseMove="mainimg_MouseMove"
                Source="{Binding Path=Image,
                                 ElementName=imagebox}" />
+        <Rectangle x:Name="mainrect"
+                   Width="0"
+                   Height="0"
+                   MaxWidth="{Binding ElementName=mainimg,
+                                      Path=ActualWidth}"
+                   MaxHeight="{Binding ElementName=mainimg,
+                                       Path=ActualWidth}"
+                   Stroke="#FF11D411"
+                   StrokeDashArray="4 2" />
     </Grid>
 </UserControl>

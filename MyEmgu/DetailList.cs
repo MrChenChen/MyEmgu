@@ -27,9 +27,9 @@ namespace MyEmgu
         /// <param name="_detailname">ListBox每一行的名称</param>
         /// <param name="_detailcontent">>ListBox每一行左边显示的名称</param>
         /// <param name="_detaildata">>ListBox每一行右边显示的数据</param>
-        public void AddItem(string _detailname, string _detailcontent, string _detaildata)
+        public void AddItem(string _detailcontent, string _detaildata)
         {
-            Detail temp = new Detail() { DetailName = _detailname, DetailContent = _detailcontent, DetailData = _detaildata, ContentBrush = new System.Windows.Media.SolidColorBrush(Colors.Black) };
+            Detail temp = new Detail() { DetailContent = _detailcontent, DetailData = _detaildata, ContentBrush = new System.Windows.Media.SolidColorBrush(Colors.Black) };
             this.Add(temp);
         }
 
@@ -40,25 +40,17 @@ namespace MyEmgu
         {
             this.Clear();
 
-            switch (SystemConfig.st)
-            {
-                case SysStation.MI:
-                    AddItem("modulename", "模块名称", "vision");
-                    AddItem("looptime", "循环时间", "0ms");
-                    AddItem("speed", "速度(pph)", "0");
-                    AddItem("good", "良品", "0");
-                    AddItem("bad", "不良", "0");
-                    AddItem("percent", "良率", "100%");
-                    break;
+            AddItem("Name", "Nothing");
+            AddItem("Time", "0 ms");
 
-                case SysStation.SI:
-                    AddItem("looptime", "循环时间", "0ms");
-                    AddItem("speed", "速度(pph)", "0");
-                    AddItem("good", "良品", "0");
-                    AddItem("bad", "不良", "0");
-                    AddItem("percent", "良率", "100%");
-                    break;
-            }
+
         }
+
+
+        public void SetListBoxText()
+        {
+
+        }
+
     }
 }

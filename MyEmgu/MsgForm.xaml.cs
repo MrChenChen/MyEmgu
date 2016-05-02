@@ -23,6 +23,8 @@ namespace MyEmgu
             SetStartPosition();
         }
 
+        bool PositionFlag = false;
+
         public void SetStartPosition()
         {
             if (m_caller == null)
@@ -35,6 +37,14 @@ namespace MyEmgu
                 Left = m_caller.Left + m_caller.ActualWidth - Width - 5;
                 Top = m_caller.Top + m_caller.ActualHeight - Height - 5;
             }
+
+            if (!PositionFlag)
+            {
+                m_caller.LocationChanged += (obj, e1) => { if (m_caller == this) this.SetStartPosition(); };
+
+                PositionFlag = true;
+            }
+
         }
 
 
@@ -72,15 +82,7 @@ namespace MyEmgu
             }
         }
 
-        private void buttonCancle_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
 
-        private void buttonOk_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
 
         //拖动窗体
         private void MianGrid_MouseDown(object sender, MouseButtonEventArgs e)

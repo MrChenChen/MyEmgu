@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Emgu.CV;
+using System;
 using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,7 +12,7 @@ namespace MyEmgu
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((double)value - 10) * 0.55;
+            return ((double)value - 10) * 0.50;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -24,7 +25,7 @@ namespace MyEmgu
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((double)value - 10) * 0.45;
+            return ((double)value - 10) * 0.5;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -32,6 +33,8 @@ namespace MyEmgu
             throw new NotImplementedException();
         }
     }
-    
+
+   
+
     #endregion 值转换器
 }

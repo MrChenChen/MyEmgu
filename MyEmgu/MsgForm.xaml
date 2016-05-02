@@ -7,7 +7,7 @@
         xmlns:s="clr-namespace:System;assembly=mscorlib"
         Title="MsgForm"
         Width="340"
-        Height="187"
+        Height="140"
         AllowsTransparency="True"
         Background="Transparent"
         ResizeMode="NoResize"
@@ -59,8 +59,8 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="124*" />
-                <RowDefinition Height="50*" />
+                <RowDefinition Height="69*" />
+                <RowDefinition Height="41*" />
             </Grid.RowDefinitions>
             <TextBlock Name="textMessage"
                        Grid.ColumnSpan="2"
@@ -68,17 +68,11 @@
 
             <Button Name="buttonOk"
                     Grid.Row="1"
-                    Width="71"
-                    Height="25"
-                    Click="buttonOk_Click"
-                    Content="确定" />
+                    Content="确定" Margin="42,9" />
             <Button Name="buttonCancle"
                     Grid.Row="1"
                     Grid.Column="1"
-                    Width="71"
-                    Height="25"
-                    Click="buttonCancle_Click"
-                    Content="取消" />
+                    Content="取消" Margin="42,9" />
         </Grid>
     </Grid>
 </Window>

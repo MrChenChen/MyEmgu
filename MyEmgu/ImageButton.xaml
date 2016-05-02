@@ -13,6 +13,9 @@
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#40FFFFFF" />
                 </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#70FFFFFF" />
+                </Trigger>
                 <Trigger Property="IsEnabled" Value="false">
                     <Setter Property="Opacity" Value="0.4" />
                 </Trigger>
@@ -30,10 +33,11 @@
 
         <Border Name="BtnBG"
                 Grid.RowSpan="2"
+                
                 Background="White"
                 Opacity="0" />
 
-        <Border Margin="0,2,0,-8">
+        <Border Margin="12,2,12,-8">
             <Image HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Source="{Binding Image}" />

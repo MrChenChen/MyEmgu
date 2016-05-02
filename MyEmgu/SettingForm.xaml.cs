@@ -260,57 +260,13 @@ namespace MyEmgu
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadSettingFormLanguage();
         }
 
         #region 加载设置窗体语言
 
         private XDocument settingformxmlfile;
 
-        /// <summary>
-        /// 加载设置窗体语言设置
-        /// </summary>
-        private void LoadSettingFormLanguage()
-        {
-            if (!System.IO.File.Exists("SettingFormConfig.xml"))
-            {
-                return;
-            }
-
-            settingformxmlfile = XDocument.Load("SettingFormConfig.xml");
-            //加载每一页眉头
-            tabitemMarktolerance.Header = FindSettingFormXmlElement("marktoleranceheader");
-            tabitemWaringsetting.Header = FindSettingFormXmlElement("warningsettingheader");
-            tabitemAboutchar.Header = FindSettingFormXmlElement("aboutcharheader");
-            tabitemAbouttakeimage.Header = FindSettingFormXmlElement("abouttakeimageheader");
-            tabitemIOsetting.Header = FindSettingFormXmlElement("iosettingheader");
-
-            //印记宽容度
-            textCharsensitivity.Text = FindSettingFormXmlElement("textCharsensitivity");
-            textLogosensitivity.Text = FindSettingFormXmlElement("textLogosensitivity");
-            textExtrapixels.Text = FindSettingFormXmlElement("textExtrapixels");
-            textChartiltangle.Text = FindSettingFormXmlElement("textChartiltangle");
-
-            textChardefectsensitivity.Text = FindSettingFormXmlElement("textChardefectsensitivity");
-            textLogodefectsensitivity.Text = FindSettingFormXmlElement("textLogodefectsensitivity");
-            textChardefectsize.Text = FindSettingFormXmlElement("textChardefectsize");
-            textLogodefectsize.Text = FindSettingFormXmlElement("textLogodefectsize");
-
-            //警告设置
-
-            DataContext = this;
-        }
-
-        private string FindSettingFormXmlElement(string elementname)
-        {
-            var x = from n in settingformxmlfile.Descendants(elementname)
-                    select n.Value;
-            foreach (var item in x)
-            {
-                return item;
-            }
-            return string.Empty;
-        }
+   
 
         #endregion 加载设置窗体语言
     }
