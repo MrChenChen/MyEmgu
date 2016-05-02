@@ -441,14 +441,14 @@ namespace MyEmgu
             {
 
 
-
+                msg_Form.Close();
             };
 
 
             msg_Form.buttonCancle.Content = "重绘";
 
 
-            msg_Form.ShowDialog();
+            msg_Form.Show();
         }
 
         //测试

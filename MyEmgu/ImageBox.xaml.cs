@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace MyEmgu
 {
@@ -21,11 +22,21 @@ namespace MyEmgu
     /// </summary>
     public partial class ImageBox : UserControl
     {
-
+        DispatcherTimer m_timer = null;
+        long flag = 0;
         public ImageBox()
         {
             InitializeComponent();
 
+            m_timer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 0, 0, 300) };
+
+            m_timer.Tick += (obj, e) =>
+            {
+                mainrect.StrokeDashOffset = flag++;
+
+            };
+
+            m_timer.Start();
         }
 
 
@@ -133,6 +144,10 @@ namespace MyEmgu
                 mainrect.Width = 0;
                 mainrect.Height = 0;
 
+                Canvas.SetLeft(mainimg, MouseDown_Point.X);
+                Canvas.SetTop(mainimg, MouseDown_Point.Y);
+                Canvas.SetLeft(secondrect, MouseDown_Point.X);
+                Canvas.SetTop(secondrect, MouseDown_Point.Y);
             }
         }
 
