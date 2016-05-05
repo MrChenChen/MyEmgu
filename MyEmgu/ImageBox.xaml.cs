@@ -139,13 +139,13 @@ namespace MyEmgu
 
                 MouseDown_Point = e.GetPosition(mainimg);
 
-                mainrect.Margin = new Thickness(MouseDown_Point.X, MouseDown_Point.Y, 0, 0);
+                //mainrect.Margin = new Thickness(MouseDown_Point.X, MouseDown_Point.Y, 0, 0);
 
                 mainrect.Width = 0;
                 mainrect.Height = 0;
 
-                Canvas.SetLeft(mainimg, MouseDown_Point.X);
-                Canvas.SetTop(mainimg, MouseDown_Point.Y);
+                Canvas.SetLeft(mainrect, MouseDown_Point.X);
+                Canvas.SetTop(mainrect, MouseDown_Point.Y);
                 Canvas.SetLeft(secondrect, MouseDown_Point.X);
                 Canvas.SetTop(secondrect, MouseDown_Point.Y);
             }
@@ -158,10 +158,16 @@ namespace MyEmgu
             {
                 var pos = e.GetPosition(mainimg);
 
-                mainrect.Width = Math.Abs(pos.X - MouseDown_Point.X);
+                var rect = new Rect(MouseDown_Point, pos);
 
-                mainrect.Height = Math.Abs(pos.Y - MouseDown_Point.Y);
 
+                Canvas.SetLeft(mainrect, rect.X);
+                Canvas.SetTop(mainrect, rect.Y);
+                Canvas.SetLeft(secondrect, rect.X);
+                Canvas.SetTop(secondrect, rect.Y);
+                mainrect.Width = rect.Width;
+
+                mainrect.Height = rect.Height;
 
 
 
