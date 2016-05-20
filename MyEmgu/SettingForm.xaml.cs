@@ -262,13 +262,7 @@ namespace MyEmgu
         {
         }
 
-        #region 加载设置窗体语言
 
-        private XDocument settingformxmlfile;
-
-   
-
-        #endregion 加载设置窗体语言
     }
 
     //错误验证

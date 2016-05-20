@@ -62,13 +62,13 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.ColumnSpan="2"
                        Width="252.725"
-                       Margin="119.663,22.204,0,96.238"
+                       Margin="114.91,20.167,0,98.275"
                        HorizontalAlignment="Left"
                        xml:space="preserve"
                        FontSize="30"
                        FontWeight="Bold"
-                       Foreground="{DynamicResource MainColor}"
-                       Text="About My Emgu">
+                        
+                       Text="About My Emgu" Foreground="#FF056FB8">
                 <TextBlock.Effect>
                     <DropShadowEffect Opacity="0.7" ShadowDepth="3" />
                 </TextBlock.Effect>

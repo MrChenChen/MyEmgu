@@ -19,6 +19,8 @@ namespace MyEmgu
     /// </summary>
     public partial class MainWindow : Window
     {
+
+
         public IntPtr m_hwnd = IntPtr.Zero;
         private ObservableCollection<string> myDebugQueue = new ObservableCollection<string>();
         private DetailList myDetailList = DetailList.GetOnlyInstance();
@@ -27,10 +29,11 @@ namespace MyEmgu
         private Rect last_Rect = new Rect();
 
         //系统状态
-        SystemStatus m_sys = SystemStatus.enumNormal;
+        //SystemStatus m_sys = SystemStatus.enumNormal;
 
         public MainWindow()
         {
+
             InitializeComponent();
 
             m_hwnd = new WindowInteropHelper(this).Handle;
@@ -42,7 +45,9 @@ namespace MyEmgu
                 nowtime.Text = DateTime.Now.ToString();
             });
             timer.Start();
+
             textWorkpath.Text = Environment.CurrentDirectory.ToString();
+
         }
 
 
@@ -57,10 +62,9 @@ namespace MyEmgu
             listboxDebug.ItemsSource = myDebugQueue;
 
             //LoadMainFormLanguage();
-            
+
 
         }
-
 
 
 
@@ -435,13 +439,13 @@ namespace MyEmgu
 
             msg_Form.buttonOk.Content = "完成";
 
-            mainimage.StartDraw_Flag = true;
+            //mainimage.StartDraw_Flag = true;
 
             msg_Form.buttonOk.Click += (obj, e1) =>
             {
 
-
                 msg_Form.Close();
+
             };
 
 
@@ -454,7 +458,7 @@ namespace MyEmgu
         //测试
         private void buttonTest_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(mainimage.Mat.IsEmpty.ToString());
+            //MessageBox.Show(mainimage.Mat.IsEmpty.ToString());
 
         }
 

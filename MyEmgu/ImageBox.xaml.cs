@@ -45,26 +45,26 @@ namespace MyEmgu
 
 
 
-        private Mat _mat = new Mat();
+        //private Mat _mat = new Mat();
 
-        public Mat Mat
-        {
-            set
-            {
-                _mat = value;
+        //public Mat Mat
+        //{
+        //    set
+        //    {
+        //        _mat = value;
 
-                if (!_mat.IsEmpty)
-                {
-                    Image = BitmapSourceConvert.ToBitmapSource(_mat);
-                }
-            }
-            get
-            {
-                return _mat;
-            }
+        //        if (!_mat.IsEmpty)
+        //        {
+        //            Image = BitmapSourceConvert.ToBitmapSource(_mat);
+        //        }
+        //    }
+        //    get
+        //    {
+        //        return _mat;
+        //    }
 
 
-        }
+        //}
 
 
 
@@ -104,7 +104,8 @@ namespace MyEmgu
 
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                Mat = new Mat(dialog.FileName, Emgu.CV.CvEnum.LoadImageType.Unchanged);
+                Image = BitmapSourceConvert.ToBitmapSource(new Mat(dialog.FileName, Emgu.CV.CvEnum.LoadImageType.Unchanged));
+
             }
         }
 
@@ -113,7 +114,7 @@ namespace MyEmgu
         {
             var menu = (ContextMenu)FindResource("ImageBoxContextMenu");
 
-            menu.HorizontalOffset = 105 + 12 * menu.Items.Cast<MenuItem>().Max(p => p.Header.ToString().Length);
+            //menu.HorizontalOffset = 105 + 12 * menu.Items.Cast<MenuItem>().Max(p => p.Header.ToString().Length);
 
             menu.IsOpen = true;
         }
