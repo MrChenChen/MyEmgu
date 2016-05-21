@@ -11,15 +11,10 @@
              mc:Ignorable="d">
     <UserControl.Resources>
 
-        <ContextMenu x:Key="ImageBoxContextMenu" Style="{x:Null}">
-            <MenuItem Click="LoadImage_Click"
-                      Header="装载图像"
-                      Style="{x:Null}" />
-            <MenuItem Header="保存当前图像" Style="{x:Null}" />
-        </ContextMenu>
+ 
 
     </UserControl.Resources>
-    <Grid Background="Transparent" MouseRightButtonDown="Grid_MouseRightButtonDown">
+    <Grid Background="Transparent"  >
         <Image Name="mainimg"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"

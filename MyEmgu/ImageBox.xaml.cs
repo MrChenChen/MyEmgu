@@ -22,8 +22,14 @@ namespace MyEmgu
     /// </summary>
     public partial class ImageBox : UserControl
     {
+        public delegate int SetPopContextMenu();
+
+        public SetPopContextMenu m_SetPopContextMenu;
+
         DispatcherTimer m_timer = null;
+
         long flag = 0;
+
         public ImageBox()
         {
             InitializeComponent();
@@ -90,38 +96,6 @@ namespace MyEmgu
         #endregion
 
 
-
-        #region 菜单事件
-
-        private void LoadImage_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
-
-            dialog.InitialDirectory = "D:\\";
-            dialog.Multiselect = false;
-            dialog.Title = "选择一张图片";
-            dialog.Filter = "JPG|*.jpg|BMP|*.bmp|PNG|*.png";
-
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                Image = BitmapSourceConvert.ToBitmapSource(new Mat(dialog.FileName, Emgu.CV.CvEnum.LoadImageType.Unchanged));
-
-            }
-        }
-
-
-        private void Grid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var menu = (ContextMenu)FindResource("ImageBoxContextMenu");
-
-            //menu.HorizontalOffset = 105 + 12 * menu.Items.Cast<MenuItem>().Max(p => p.Header.ToString().Length);
-
-            menu.IsOpen = true;
-        }
-
-
-
-        #endregion
 
 
         #region 绘制相关

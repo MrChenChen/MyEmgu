@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Emgu.CV;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -14,6 +15,8 @@ using System.Xml.Linq;
 
 namespace MyEmgu
 {
+
+
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
@@ -50,11 +53,8 @@ namespace MyEmgu
 
         }
 
-
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
 
             myDetailList.Init();
 
@@ -63,9 +63,24 @@ namespace MyEmgu
 
             //LoadMainFormLanguage();
 
+            //校正主图片控件的右键菜单
+            m_imagebox.m_SetPopContextMenu = new ImageBox.SetPopContextMenu(() => (menuFile.Tag != null) ? 0 : 1);
+
+
+            {
+                var temp = new DispatcherTimer();
+
+                temp.Tick += (obj, e1) =>
+                {
+                    WindowState = WindowState.Maximized;
+                    temp.Stop();
+                };
+
+                temp.Interval = new TimeSpan(0, 0, 0, 0, 50);
+                temp.Start();
+            }
 
         }
-
 
 
         #region 公共函数
@@ -117,6 +132,8 @@ namespace MyEmgu
         #region UI刷新
 
 
+
+
         #endregion
 
 
@@ -149,8 +166,6 @@ namespace MyEmgu
                 Top = last_Rect.Y;
             }
 
-
-
         }
 
         private void Min_MouseUp(object sender, MouseButtonEventArgs e)
@@ -163,6 +178,11 @@ namespace MyEmgu
 
 
         #region 菜单事件
+
+
+        #region 菜单栏事件
+
+
 
         //文件==============================================
         //      退出
@@ -202,6 +222,44 @@ namespace MyEmgu
         }
 
         //报告==============================================
+
+        #endregion
+
+
+        #region 主图片框右键菜单
+
+
+        private void m_imagebox_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+            ContextMenu menu = (ContextMenu)ImageBox_Grid.Resources["MainImageContextMenu"];
+
+            menu.HorizontalOffset = (menuFile.Tag == null) ? (105 + 12 * menu.Items.Cast<MenuItem>().Max(p => p.Header.ToString().Length)) : 0;
+
+            menu.IsOpen = true;
+
+
+        }
+
+        private void LoadImage_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
+
+            dialog.InitialDirectory = "D:\\";
+            dialog.Multiselect = false;
+            dialog.Title = "选择一张图片";
+            dialog.Filter = "JPG|*.jpg|BMP|*.bmp|PNG|*.png";
+
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                m_imagebox.Image = BitmapSourceConvert.ToBitmapSource(new Mat(dialog.FileName, Emgu.CV.CvEnum.LoadImageType.Unchanged));
+
+            }
+        }
+
+
+        #endregion
+
 
         #endregion 菜单事件
 
@@ -391,11 +449,7 @@ namespace MyEmgu
 
 
 
-
-
         #endregion
-
-
 
 
         #region 上方 7 按钮事件
@@ -403,6 +457,12 @@ namespace MyEmgu
 
         //拍照
         private void buttonCamera_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        //相机设置
+        private void buttonCameraSetting_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -458,15 +518,21 @@ namespace MyEmgu
         //测试
         private void buttonTest_Click(object sender, RoutedEventArgs e)
         {
-            //MessageBox.Show(mainimage.Mat.IsEmpty.ToString());
 
         }
+
+
+
+
+
+
+
+
 
         #endregion
 
 
-
-
-
     }
+
+
 }
